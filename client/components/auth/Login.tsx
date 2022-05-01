@@ -9,7 +9,7 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Link from "next/link";
 
 type formtype = {
-  username: string;
+  email: string;
   password: string;
 };
 
@@ -22,10 +22,7 @@ type inputObjType = {
 }[];
 
 export default function Login() {
-  const [formValue, setFormValue] = useState<formtype>({
-    username: "",
-    password: "",
-  });
+  const [formValue, setFormValue] = useState<formtype>({} as formtype);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [msg, setMsg] = useState<string>("");
@@ -35,9 +32,9 @@ export default function Login() {
     {
       key: 0,
       type: "text",
-      name: "username",
-      placeholder: "Username",
-      value: formValue.username,
+      name: "email",
+      placeholder: "Emain",
+      value: formValue.email,
     },
     {
       key: 1,
@@ -66,13 +63,16 @@ export default function Login() {
   async function handleSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
 
-    if (!formValue.password || !formValue.username) {
+    if (!formValue.password || !formValue.email) {
       setError("Fill all the fields");
       return;
     }
 
     setLoading(true);
-    const response: any = await axios.post("/api/auth/login", formValue);
+    const response: any = await axios.post(
+      "http://localhost:8000/api/user/login",
+      formValue
+    );
 
     setLoading(false);
 

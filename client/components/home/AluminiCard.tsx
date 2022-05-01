@@ -31,13 +31,10 @@ export default function AluminiCard({
       />
       <section className="w-auto border-l border-slate-200 pl-3 flex-shrink-0">
         <h1 className="text-lg text-orange-500 font-slab">{name}</h1>
-        <p className="text-slate-500">{role}</p>
-        <p className="text-slate-700">
-          {company} - {country}
-        </p>
-        <p>{batch}</p>
+        <p className="text-slate-600">{role}</p>
+
         <Link href={`${id}`}>
-          <a className="py-[2px] px-3 mt-1 w-24 text-sm inline-block text-center  bg-orange-500 text-white border border-orange-500 hover:bg-white hover:text-orange-500 hover:ring ring-orange-100 transition duration-200">
+          <a className="py-[2px] px-3 mt-3 mb-2 w-24 text-sm inline-block text-center  bg-orange-500 text-white border border-orange-500 hover:bg-white hover:text-orange-500 hover:ring ring-orange-100 transition duration-200">
             More
           </a>
         </Link>

@@ -9,7 +9,7 @@ import Error from "../common/Error";
 import Link from "next/link";
 
 type formtype = {
-  username: string;
+  name: string;
   email: string;
   password: string;
 };
@@ -24,7 +24,7 @@ type inputObjType = {
 
 export default function Register() {
   const [formValue, setFormValue] = useState<formtype>({
-    username: "",
+    name: "",
     password: "",
     email: "",
   });
@@ -37,9 +37,9 @@ export default function Register() {
     {
       key: 0,
       type: "text",
-      name: "username",
+      name: "name",
       placeholder: "Enter your name",
-      value: formValue.username,
+      value: formValue.name,
     },
     {
       key: 1,
@@ -83,14 +83,19 @@ export default function Register() {
 
   async function handleSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
-    if (!formValue.password || !formValue.username || !formValue.email) {
+    if (!formValue.password || !formValue.name || !formValue.email) {
       setError("Fill all the fields");
       return;
     }
 
     if (validateEmail(formValue.email)) {
       setLoading(true);
-      const response: any = await axios.post("/api/auth/register", formValue);
+      const response: any = await axios.post(
+        "http://localhost:8000/api/user/register",
+        formValue
+      );
+
+      console.log(response.data);
 
       setLoading(false);
 
