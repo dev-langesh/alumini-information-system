@@ -24,9 +24,9 @@ export default function Header() {
             Register
           </a>
         </Link>{" "}
-        <Link href="/about">
+        <Link href="/profile">
           <a className="hover:underline underline-offset-1 decoration-dotted">
-            About us
+            Profile
           </a>
         </Link>{" "}
       </section>

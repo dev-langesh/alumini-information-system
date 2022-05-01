@@ -12,7 +12,7 @@ export const navObj: navObjType = [
   },
   {
     key: 3,
-    title: "About Us",
-    href: "/about",
+    title: "Profile",
+    href: "/profile",
   },
 ];
