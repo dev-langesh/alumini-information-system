@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import Error from "./Error";
+import Error from "../common/Error";
 import Input from "./Input";
 
 export default function Form() {
