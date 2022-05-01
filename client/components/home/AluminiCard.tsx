@@ -9,6 +9,7 @@ export type aluminiType = {
   role: string;
   company: string;
   batch: string;
+  description: string;
 };
 
 export default function AluminiCard({
@@ -19,15 +20,16 @@ export default function AluminiCard({
   role,
   company,
   batch,
+  description,
 }: aluminiType) {
   return (
-    <section className="flex space-x-4 items-center p-4 shadow my-2">
+    <article className="flex space-x-4 items-center p-4 shadow col-span-12 md:col-span-6 ">
       <img
         src={`${image}`}
         alt="image not found"
         className="w-24 h-32 object-cover rounded-full "
       />
-      <div className="w-autl border-l border-slate-200 pl-3">
+      <section className="w-auto border-l border-slate-200 pl-3 flex-shrink-0">
         <h1 className="text-lg text-orange-500 font-slab">{name}</h1>
         <p className="text-slate-500">{role}</p>
         <p className="text-slate-700">
@@ -39,7 +41,10 @@ export default function AluminiCard({
             More
           </a>
         </Link>
-      </div>
-    </section>
+      </section>
+      <section className="hidden xl:block pl-2">
+        <p>{description}</p>
+      </section>
+    </article>
   );
 }
