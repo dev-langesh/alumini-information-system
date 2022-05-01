@@ -11,7 +11,12 @@ export const navObj: navObjType = [
     href: "/register",
   },
   {
-    key: 3,
+    key: 1,
+    title: "Notifications",
+    href: "/notifications",
+  },
+  {
+    key: 2,
     title: "Profile",
     href: "/profile",
   },

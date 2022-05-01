@@ -7,6 +7,8 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Error from "../common/Error";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { signin } from "../../src/features/authSlice";
 
 type formtype = {
   name: string;
@@ -33,6 +35,8 @@ export default function Register() {
   const [error, setError] = useState<string>("");
   const [msg, setMsg] = useState<string>("");
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const inputObj: inputObjType = [
     {
       key: 0,
@@ -102,9 +106,13 @@ export default function Register() {
       if (response.data.error) {
         setError(response.data.error);
       } else {
+        document.cookie = `token=${response.data.token}; max-age=${
+          60 * 60 * 24 * 60
+        }`;
+        dispatch(signin(response.data.token));
+
         setMsg("Redirecting...");
         router.push("/");
-        window.localStorage.setItem("token", response.data.token);
       }
     }
   }

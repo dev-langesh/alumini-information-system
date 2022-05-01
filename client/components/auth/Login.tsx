@@ -1,4 +1,3 @@
-import { GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -7,6 +6,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { signin } from "../../src/features/authSlice";
 
 type formtype = {
   email: string;
@@ -28,6 +29,8 @@ export default function Login() {
   const [msg, setMsg] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>();
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const inputObj: inputObjType = [
     {
       key: 0,
@@ -80,8 +83,11 @@ export default function Login() {
       setError(response.data.error);
     } else {
       setMsg("Redirecting...");
+      document.cookie = `token=${response.data.token}; max-age=${
+        60 * 60 * 24 * 60
+      }`;
+      dispatch(signin(response.data.token));
       router.push("/");
-      window.localStorage.setItem("token", response.data.token);
     }
   }
 
