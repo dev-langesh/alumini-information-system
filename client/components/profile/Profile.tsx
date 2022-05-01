@@ -1,10 +1,12 @@
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { SyntheticEvent, useRef, useState } from "react";
 import { inputObj } from "./inputData";
 import UploadImage from "./UploadImage";
 import { formDataType } from "./formDataType";
 
 export default function profile() {
   const [formData, setFormData] = useState<formDataType>({} as formDataType);
+
+  const formRef = useRef<HTMLFormElement>(null!);
 
   function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     setFormData((prev) => {
@@ -17,12 +19,22 @@ export default function profile() {
 
   function submitHandler(e: SyntheticEvent) {
     e.preventDefault();
-    console.log(formData);
+    const xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "http://localhost:8000/api/upload", true);
+
+    xhr.upload.addEventListener("progress", (e) => {
+      console.log(Math.ceil((e.loaded / e.total) * 100));
+    });
+
+    const formData = new FormData(formRef?.current);
+    xhr.send(formData);
   }
 
   return (
     <>
       <form
+        ref={formRef}
         onSubmit={submitHandler}
         className="flex flex-col sm:flex-row p-4 w-screen h-screen overflow-auto pb-20"
       >
