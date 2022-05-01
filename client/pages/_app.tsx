@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <Provider store={store}>
       <Layout>
         <Head>
-          <title>Pegeodo</title>
+          <title>AIS</title>
         </Head>
         <Component {...pageProps} />
       </Layout>

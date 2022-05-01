@@ -1,21 +1,31 @@
 const express = require("express");
-const app = express();
 const cors = require("cors");
+const connectDB = require("./config/db");
+const { corsOptions } = require("./config/corsOptions");
+
+//initializing app
+const app = express();
+
+//configuring env
 require("dotenv").config();
 const port = process.env.PORT || 5001;
-const { corsOptions } = require("./config/corsOptions");
-const connectDB = require("./config/db");
 
+//connecting to mongodb
+connectDB();
+
+//middlewares
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-connectDB();
+app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static("uploads"));
 app.use("/api/user", require("./routes/userRoutes"));
+app.use("/api/upload", require("./routes/uploadRoute"));
 
 app.use("/", (req, res) => {
   res.json({ message: "server is running" });
 });
 
+//error handler
 app.use(require("./middlewares/error.middleware"));
 
 app.listen(port, () => {
