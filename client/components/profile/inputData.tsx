@@ -17,7 +17,7 @@ export const inputObj: inputType[] = [
   },
   {
     id: 3,
-    name: "mobile",
+    name: "phone",
     placeholder: "Mobile Number",
   },
   { id: 4, name: "degree", placeholder: "Degree" },

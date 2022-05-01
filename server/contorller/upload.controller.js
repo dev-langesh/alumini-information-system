@@ -14,22 +14,30 @@ async function uploadImage(req, res) {
     location,
   } = req.body;
 
-  const data = await Profile.create({
-    name,
-    batch,
-    email,
-    company,
-    job,
-    description,
-    location,
-    degree,
-    phone,
-    img: `http://localhost:${process.env.PORT}/${req.file.path}`,
-  });
+  console.log(req.id);
 
-  console.log(data);
+  try {
+    const data = await Profile.create({
+      user: req.id,
+      name,
+      batch,
+      email,
+      company,
+      job,
+      description,
+      location,
+      degree,
+      phone,
+      img: `http://localhost:${process.env.PORT}/${req.file.path}`,
+    });
+    console.log(data);
+  } catch (err) {
+    res.json({ error: "Profile Details Already Exists", stack: err.stack });
+    console.log(err);
+    return;
+  }
 
-  res.send("file uploaded");
+  res.json({ status: "ok" });
 }
 
 module.exports = { uploadImage };

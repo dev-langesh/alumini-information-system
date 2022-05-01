@@ -1,12 +1,22 @@
-import React, { SyntheticEvent, useRef, useState } from "react";
+import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
 import { inputObj } from "./inputData";
 import UploadImage from "./UploadImage";
 import { formDataType } from "./formDataType";
+import { useSelector } from "react-redux";
+import Error from "../common/Error";
 
 export default function profile() {
   const [formData, setFormData] = useState<formDataType>({} as formDataType);
+  const [error, setError] = useState<string>("");
+  const token = useSelector<any>((state) => state.auth.value);
 
   const formRef = useRef<HTMLFormElement>(null!);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setError("");
+    }, 3000);
+  }, [error]);
 
   function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     setFormData((prev) => {
@@ -17,7 +27,7 @@ export default function profile() {
     });
   }
 
-  function submitHandler(e: SyntheticEvent) {
+  async function submitHandler(e: SyntheticEvent) {
     e.preventDefault();
     const xhr = new XMLHttpRequest();
 
@@ -27,12 +37,24 @@ export default function profile() {
       console.log(Math.ceil((e.loaded / e.total) * 100));
     });
 
+    xhr.setRequestHeader("Authorization", "Bearer " + token);
+
     const formData = new FormData(formRef?.current);
     xhr.send(formData);
+
+    xhr.onreadystatechange = function () {
+      if (this.readyState === 4 && this.status === 200) {
+        const res = JSON.parse(this.response);
+        if (res.error) {
+          setError(res.error);
+        }
+      }
+    };
   }
 
   return (
     <>
+      {error && <Error error={error} />}
       <form
         ref={formRef}
         onSubmit={submitHandler}
