@@ -2,6 +2,7 @@ type inputType = {
   id: number;
   name: string;
   placeholder: string;
+  type?: string;
 };
 
 export const inputObj: inputType[] = [

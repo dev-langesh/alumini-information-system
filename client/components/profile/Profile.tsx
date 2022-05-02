@@ -1,88 +1,41 @@
-import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
-import { inputObj } from "./inputData";
-import UploadImage from "./UploadImage";
-import { formDataType } from "./formDataType";
-import { useSelector } from "react-redux";
-import Error from "../common/Error";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { setProfile } from "../../src/features/aluminiSlice";
+import Loading from "../common/Loading";
+import ShowProfile from "./ShowProfile";
+import CreateProfile from "./CreateProfile";
 
 export default function profile() {
-  const [formData, setFormData] = useState<formDataType>({} as formDataType);
   const [error, setError] = useState<string>("");
   const token = useSelector<any>((state) => state.auth.value);
-
-  const formRef = useRef<HTMLFormElement>(null!);
+  const [loading, setLoading] = useState<boolean>(true);
+  const dispatch = useDispatch();
+  const profile = useSelector<any>((state) => state.alumini.value);
 
   useEffect(() => {
-    setTimeout(() => {
-      setError("");
-    }, 3000);
-  }, [error]);
-
-  function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
-    setFormData((prev) => {
-      return {
-        ...prev,
-        [e.target.name]: e.target.value,
-      };
-    });
-  }
-
-  async function submitHandler(e: SyntheticEvent) {
-    e.preventDefault();
-    const xhr = new XMLHttpRequest();
-
-    xhr.open("POST", "http://localhost:8000/api/upload", true);
-
-    xhr.upload.addEventListener("progress", (e) => {
-      console.log(Math.ceil((e.loaded / e.total) * 100));
-    });
-
-    xhr.setRequestHeader("Authorization", "Bearer " + token);
-
-    const formData = new FormData(formRef?.current);
-    xhr.send(formData);
-
-    xhr.onreadystatechange = function () {
-      if (this.readyState === 4 && this.status === 200) {
-        const res = JSON.parse(this.response);
-        if (res.error) {
-          setError(res.error);
+    async function getProfile() {
+      const response = await axios.get(
+        "http://localhost:8000/api/get-profile",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      }
-    };
-  }
+      );
+
+      setLoading(false);
+
+      console.log(response.data);
+      dispatch(setProfile(response.data));
+    }
+    if (token) getProfile();
+  }, [token]);
 
   return (
     <>
-      {error && <Error error={error} />}
-      <form
-        ref={formRef}
-        onSubmit={submitHandler}
-        className="flex flex-col sm:flex-row p-4 w-screen h-screen overflow-auto pb-20"
-      >
-        <UploadImage />
-
-        <section className="space-y-3 pt-6 flex flex-col  content-center w-full sm:w-[350px]">
-          {inputObj.map((item) => {
-            return (
-              <input
-                type="text"
-                onChange={changeHandler}
-                className="border block px-4 py-2 focus:border focus:border-orange-500 focus:ring ring-orange-100 outline-none w-full"
-                key={item.id}
-                {...item}
-                id={item.id.toString()}
-              />
-            );
-          })}
-          <button
-            type="submit"
-            className="bg-orange-500 p-2 text-white text-center border border-orange-500  hover:ring ring-orange-500 ring-offset-2  tracking-wider"
-          >
-            Submit
-          </button>
-        </section>
-      </form>
+      {loading && <Loading />}
+      {profile ? <ShowProfile /> : <CreateProfile />}
     </>
   );
 }

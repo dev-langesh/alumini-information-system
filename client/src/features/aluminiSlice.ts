@@ -1,10 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { aluminiData } from "../../components/home/data";
 
 const slice = createSlice({
   name: "alumini",
-  initialState: { value: aluminiData },
-  reducers: {},
+  initialState: { value: {} },
+  reducers: {
+    setProfile: (state, action) => {
+      state.value = action.payload;
+    },
+    reset: (state) => {
+      state.value = {};
+    },
+  },
 });
+
+export const { setProfile } = slice.actions;
 
 export default slice.reducer;

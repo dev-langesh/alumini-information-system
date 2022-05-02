@@ -12,6 +12,10 @@ export default function Header() {
   const auth = useSelector<any>((state) => state.auth.value);
   const router = useRouter();
 
+  useEffect(() => {
+    console.log(auth);
+  }, [auth]);
+
   useLayoutEffect(() => {
     const cookie = document.cookie;
     cookie.split("; ").forEach((item) => {
@@ -20,6 +24,12 @@ export default function Header() {
       }
     });
   }, []);
+
+  const signout = () => {
+    document.cookie = `token=; max-age=${0}`;
+    dispatch(logout());
+    router.push("/");
+  };
 
   return (
     <header className="flex bg-orange-500 text-white  sm:py-2 py-1 px-6 justify-between items-center space-x-10">
@@ -46,14 +56,7 @@ export default function Header() {
                 Profile
               </a>
             </Link>{" "}
-            <button
-              onClick={() => {
-                document.cookie = `token=; max-age=${0}`;
-                dispatch(logout());
-                router.push("/");
-              }}
-              className="bg-white text-orange-500 px-2"
-            >
+            <button onClick={signout} className="bg-white text-orange-500 px-2">
               Log out
             </button>
           </>

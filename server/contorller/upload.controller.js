@@ -14,7 +14,20 @@ async function uploadImage(req, res) {
     location,
   } = req.body;
 
-  console.log(req.id);
+  if (
+    !name ||
+    !batch ||
+    !company ||
+    !description ||
+    !degree ||
+    !job ||
+    !email ||
+    !phone ||
+    !location
+  ) {
+    res.json({ error: "Fill all the fields" });
+    return;
+  }
 
   try {
     const data = await Profile.create({
