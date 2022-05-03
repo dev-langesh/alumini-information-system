@@ -63,11 +63,13 @@ export default function UpdateImage({ url }: { url: string }) {
           {image}
         </p>
       ) : (
-        <img
-          src={`${url}`}
-          className="w-60 h-56 object-cover flex items-center justify-center"
-          alt="Not found"
-        />
+        <a href={url} target="_blank">
+          <img
+            src={`${url}`}
+            className="w-60 h-56 object-cover flex items-center justify-center"
+            alt="Not found"
+          />
+        </a>
       )}
       <button className="text-center relative bg-orange-500 text-white  w-full py-2 px-3 mt-4 transition-all duration-200 hover:ring-2 ring-orange-500 ring-offset-2">
         <span>Change</span>
