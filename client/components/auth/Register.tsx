@@ -112,7 +112,7 @@ export default function Register() {
         dispatch(signin(response.data.token));
 
         setMsg("Redirecting...");
-        router.push("/");
+        router.push("/profile");
       }
     }
   }

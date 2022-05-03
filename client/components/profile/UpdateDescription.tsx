@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 
 export default function UpdateDescription({
   description,
+  type,
 }: {
   description: string;
+  type?: string;
 }) {
   const [edit, setEdit] = useState<boolean>(false);
   const [value, setValue] = useState<string>();
@@ -68,15 +70,17 @@ export default function UpdateDescription({
           </button>
         </>
       ) : (
-        <button
-          onClick={() => {
-            setValue(description);
-            setEdit(true);
-          }}
-          className="text-center bg-orange-500 text-white  w-full py-2 mt-4 transition-all duration-200 hover:ring-2 ring-orange-500 ring-offset-2"
-        >
-          Change Description
-        </button>
+        type !== "view" && (
+          <button
+            onClick={() => {
+              setValue(description);
+              setEdit(true);
+            }}
+            className="text-center bg-orange-500 text-white  w-full py-2 mt-4 transition-all duration-200 hover:ring-2 ring-orange-500 ring-offset-2"
+          >
+            Change Description
+          </button>
+        )
       )}
     </section>
   );

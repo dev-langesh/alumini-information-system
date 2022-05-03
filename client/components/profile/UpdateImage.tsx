@@ -4,7 +4,13 @@ import { setProfile } from "../../src/features/aluminiSlice";
 import Loading from "../common/Loading";
 import { formDataType } from "./formDataType";
 
-export default function UpdateImage({ url }: { url: string }) {
+export default function UpdateImage({
+  url,
+  type,
+}: {
+  url: string;
+  type: string;
+}) {
   const token = useSelector<any>((state) => state.auth.value);
   const dispatch = useDispatch();
   const [image, setImage] = useState<string | null>(null);
@@ -71,15 +77,17 @@ export default function UpdateImage({ url }: { url: string }) {
           />
         </a>
       )}
-      <button className="text-center relative bg-orange-500 text-white  w-full py-2 px-3 mt-4 transition-all duration-200 hover:ring-2 ring-orange-500 ring-offset-2">
-        <span>Change</span>
-        <input
-          onChange={imageHandler}
-          type="file"
-          name="image"
-          className=" absolute w-full h-full top-0 left-0 opacity-0 "
-        />
-      </button>
+      {type !== "view" && (
+        <button className="text-center relative bg-orange-500 text-white  w-full py-2 px-3 mt-4 transition-all duration-200 hover:ring-2 ring-orange-500 ring-offset-2">
+          <span>Change</span>
+          <input
+            onChange={imageHandler}
+            type="file"
+            name="image"
+            className=" absolute w-full h-full top-0 left-0 opacity-0 "
+          />
+        </button>
+      )}
       {image && (
         <button
           type="submit"

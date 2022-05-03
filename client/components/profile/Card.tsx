@@ -10,9 +10,11 @@ import Error from "../common/Error";
 export default function Card({
   children,
   fieldName,
+  type,
 }: {
   children: string;
   fieldName: string;
+  type?: string;
 }) {
   const [edit, setEdit] = useState<null | boolean>(null);
   const [value, setValue] = useState<string | null>(null);
@@ -43,7 +45,11 @@ export default function Card({
   }
 
   return (
-    <div className="shadow px-3 py-1 flex w-full justify-between items-center">
+    <div
+      className={`shadow px-3 ${
+        type === "view" ? "py-2" : "py-1"
+      } flex w-full justify-between items-center`}
+    >
       {error && <Error error={error} />}
       {edit ? (
         <input
@@ -55,35 +61,40 @@ export default function Card({
       ) : (
         <span>{value ? value : children}</span>
       )}
-      <aside className="ml-3 flex py-1">
-        {edit ? (
-          <>
-            <IconButton sx={{ color: "orange" }}>
-              <CheckIcon
-                onClick={(e: any) => {
-                  updateHandler(e);
+      {type !== "view" ? (
+        <aside className="ml-3 flex py-1">
+          {edit ? (
+            <>
+              <IconButton sx={{ color: "orange" }}>
+                <CheckIcon
+                  onClick={(e: any) => {
+                    updateHandler(e);
+                    setEdit(null);
+                  }}
+                />
+              </IconButton>
+              <IconButton
+                sx={{ color: "red" }}
+                onClick={() => {
+                  setValue(children);
                   setEdit(null);
                 }}
-              />
-            </IconButton>
-            <IconButton
-              sx={{ color: "red" }}
-              onClick={() => {
-                setValue(children);
-                setEdit(null);
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
-          </>
-        ) : (
-          <>
-            <IconButton sx={{ color: "orange" }} onClick={() => setEdit(true)}>
-              <EditIcon />
-            </IconButton>
-          </>
-        )}
-      </aside>
+              >
+                <CloseIcon />
+              </IconButton>
+            </>
+          ) : (
+            <>
+              <IconButton
+                sx={{ color: "orange" }}
+                onClick={() => setEdit(true)}
+              >
+                <EditIcon />
+              </IconButton>
+            </>
+          )}
+        </aside>
+      ) : null}
     </div>
   );
 }

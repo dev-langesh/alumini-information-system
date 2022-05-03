@@ -66,4 +66,29 @@ async function updateProfile(req, res) {
   }
 }
 
-module.exports = { getProfile, updateImage, updateProfile };
+// GET api/get-all-profile
+async function getAllProfile(req, res) {
+  const data = await Profile.find({});
+  res.json(data);
+}
+
+// GET api/alumini/:id
+async function getAlumini(req, res) {
+  const id = req.params.id;
+
+  const data = await Profile.findById(id);
+
+  if (!data) {
+    res.json({ error: "Profile Not Found" });
+    return;
+  }
+  res.json(data);
+}
+
+module.exports = {
+  getProfile,
+  updateImage,
+  updateProfile,
+  getAllProfile,
+  getAlumini,
+};

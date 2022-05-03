@@ -87,7 +87,7 @@ export default function Login() {
         60 * 60 * 24 * 60
       }`;
       dispatch(signin(response.data.token));
-      router.push("/");
+      router.push("/profile");
     }
   }
 
