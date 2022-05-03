@@ -17,9 +17,10 @@ export default function UploadImage() {
     setImage(name);
     openFile(false);
   }
+
   return (
     <>
-      <section className="flex items-center flex-col flex-grow-0 sm:max-w-[250px] mr-6">
+      <section className="flex items-center flex-col flex-grow-1 sm:max-w-[250px] ">
         <input
           onChange={imageHandler}
           type="file"

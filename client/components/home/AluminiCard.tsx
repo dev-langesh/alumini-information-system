@@ -34,8 +34,8 @@ export default function AluminiCard({
         <p className="text-slate-600">{role}</p>
 
         <Link href={`${id}`}>
-          <a className="py-[2px] px-3 mt-3 mb-2 w-24 text-sm inline-block text-center  bg-orange-500 text-white border border-orange-500 hover:bg-white hover:text-orange-500 hover:ring ring-orange-100 transition duration-200">
-            More
+          <a className="py-[2px] px-3 mt-3 mb-2 w-full text-sm inline-block text-center  bg-orange-500 text-white border border-orange-500 hover:bg-white hover:text-orange-500 hover:ring ring-orange-100 transition duration-200">
+            About
           </a>
         </Link>
       </section>

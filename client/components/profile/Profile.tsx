@@ -7,11 +7,15 @@ import ShowProfile from "./ShowProfile";
 import CreateProfile from "./CreateProfile";
 
 export default function profile() {
-  const [error, setError] = useState<string>("");
   const token = useSelector<any>((state) => state.auth.value);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useDispatch();
   const profile = useSelector<any>((state) => state.alumini.value);
+  const [error, setError] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    console.log(profile);
+  }, [profile]);
 
   useEffect(() => {
     async function getProfile() {
@@ -27,6 +31,10 @@ export default function profile() {
       setLoading(false);
 
       console.log(response.data);
+
+      if (response.data.error) {
+        setError(true);
+      }
       dispatch(setProfile(response.data));
     }
     if (token) getProfile();
@@ -35,7 +43,7 @@ export default function profile() {
   return (
     <>
       {loading && <Loading />}
-      {profile ? <ShowProfile /> : <CreateProfile />}
+      {!error ? <ShowProfile /> : <CreateProfile />}
     </>
   );
 }

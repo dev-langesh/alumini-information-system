@@ -16,6 +16,7 @@ const schema = mongoose.Schema(
     job: { type: String, required: true },
     location: { type: String, required: true },
     img: { type: String, unique: true, required: true },
+    description: String,
   },
   { collection: "profile" }
 );

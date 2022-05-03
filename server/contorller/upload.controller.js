@@ -23,9 +23,10 @@ async function uploadImage(req, res) {
     !job ||
     !email ||
     !phone ||
-    !location
+    !location ||
+    !req.file
   ) {
-    res.json({ error: "Fill all the fields" });
+    res.json({ error: "Fill all the credentials" });
     return;
   }
 
@@ -37,15 +38,14 @@ async function uploadImage(req, res) {
       email,
       company,
       job,
-      description,
+      description: description[1],
       location,
       degree,
       phone,
       img: `http://localhost:${process.env.PORT}/${req.file.path}`,
     });
-    console.log(data);
   } catch (err) {
-    res.json({ error: "Profile Details Already Exists", stack: err.stack });
+    res.json({ error: "Duplicate Value", stack: err.stack });
     console.log(err);
     return;
   }
