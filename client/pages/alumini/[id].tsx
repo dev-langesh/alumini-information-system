@@ -1,16 +1,11 @@
-import React, { useEffect } from "react";
-import { useRouter } from "next/router";
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
+import React from "react";
+import { GetStaticPaths, GetStaticProps } from "next";
 import axios from "axios";
 import Card from "../../components/profile/Card";
 import UpdateImage from "../../components/profile/UpdateImage";
 import UpdateDescription from "../../components/profile/UpdateDescription";
 
 export default function Alumini(props: any) {
-  const router = useRouter();
-
-  const { alumini } = router.query;
-
   return (
     <article className="flex w-full flex-col sm:flex-row ">
       <UpdateImage type="view" url={props.img} />

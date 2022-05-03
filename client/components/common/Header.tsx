@@ -11,10 +11,11 @@ export default function Header() {
   const dispatch = useDispatch();
   const auth = useSelector<any>((state) => state.auth.value);
   const router = useRouter();
+  const [search, setSearch] = useState<String | null>(null);
 
   useEffect(() => {
-    console.log(auth);
-  }, [auth]);
+    search;
+  }, [search]);
 
   useLayoutEffect(() => {
     const cookie = document.cookie;
@@ -36,8 +37,12 @@ export default function Header() {
       <Link href="/">
         <a className="text-lg tracking-wide text-white font-slab">AIS</a>
       </Link>{" "}
-      <form className="hidden sm:block flex-1">
+      <form
+        action={`/aluminibyname/${search}`}
+        className="hidden sm:block flex-1"
+      >
         <input
+          onChange={(e) => setSearch(e.target.value)}
           type="text"
           placeholder="Search..."
           className="border px-3 py-1 w-full outline-none focus:border-white bg-transparent placeholder:text-white"

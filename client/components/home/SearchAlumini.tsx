@@ -6,9 +6,9 @@ import Input from "./Input";
 
 export default function Form() {
   const [value, setValue] = useState("");
-  const router = useRouter();
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (error) {
@@ -32,23 +32,7 @@ export default function Form() {
 
     setLoading(true);
 
-    // const response = await axios.post("/api/create-todo", {
-    //   todo: value,
-    // });
-
-    setLoading(false);
-
-    // if (response.data.error) {
-    //   setError(response.data.error);
-    // } else {
-    //   setError("");
-
-    //   console.log(response.data);
-
-    //   dispatch(setTodo({ todo: value, _id: response.data._id }));
-    // }
-
-    // console.log(response);
+    router.push(`/aluminibyname/${value}`);
   };
 
   return (

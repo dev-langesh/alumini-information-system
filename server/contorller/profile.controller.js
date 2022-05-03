@@ -1,5 +1,6 @@
 const { Profile } = require("../model/profile.model");
 const jwt = require("jsonwebtoken");
+
 // PRIVATE
 // GET /api/get-profile
 async function getProfile(req, res) {
@@ -85,10 +86,24 @@ async function getAlumini(req, res) {
   res.json(data);
 }
 
+// GET /api/get-alumini-by-name/name
+async function getAluminiByName(req, res) {
+  const name = req.params.name;
+
+  const data = await Profile.find({ name });
+
+  if (data.length === 0) {
+    res.json({ error: "Profile Not Found" });
+    return;
+  }
+  res.json(data);
+}
+
 module.exports = {
   getProfile,
   updateImage,
   updateProfile,
   getAllProfile,
   getAlumini,
+  getAluminiByName,
 };
