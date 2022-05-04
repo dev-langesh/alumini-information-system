@@ -5,18 +5,20 @@ import { useSelector } from "react-redux";
 
 export default function Container() {
   const data = useSelector((state: any) => state.profiles.value);
+  useEffect(() => {
+    console.log(data);
+  });
   return (
-    <main className=" pb-20 sm:grid grid-cols-12 gap-6 ">
+    <main className=" pb-20 sm:grid grid-cols-12 gap-6">
       <SearchAlumini />
-      {data.lengeth === 0 ? (
-        <div className="w-screen h-full grid place-content-center text-xl">
+      {data.length === 0 && (
+        <div className=" text-lg text-slate-500 col-span-12 text-center p-8">
           No Profile Data
         </div>
-      ) : (
-        data.map((item: any) => {
-          return <AluminiCard key={item._id} {...item} />;
-        })
       )}
+      {data.map((item: any) => {
+        return <AluminiCard key={item._id} {...item} />;
+      })}
     </main>
   );
 }

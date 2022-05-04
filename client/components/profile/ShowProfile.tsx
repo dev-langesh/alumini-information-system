@@ -1,16 +1,11 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import Card from "./Card";
 import UpdateDescription from "./UpdateDescription";
 import UpdateImage from "./UpdateImage";
 
 export default function ShowProfile() {
-  const dispatch = useDispatch();
   const profile: any = useSelector<any>((state) => state.alumini.value);
-
-  useEffect(() => {
-    console.log(profile);
-  }, []);
 
   return (
     <article className="flex w-full flex-col sm:flex-row ">

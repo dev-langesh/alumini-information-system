@@ -92,7 +92,7 @@ export default function Login() {
   }
 
   return (
-    <section className="w-screen h-screen grid place-items-center">
+    <section className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <Error error={error} />
       <form
         onSubmit={handleSubmit}

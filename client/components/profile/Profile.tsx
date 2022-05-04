@@ -6,7 +6,7 @@ import Loading from "../common/Loading";
 import ShowProfile from "./ShowProfile";
 import CreateProfile from "./CreateProfile";
 
-export default function profile() {
+export default function Profile() {
   const token = useSelector<any>((state) => state.auth.value);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useDispatch();

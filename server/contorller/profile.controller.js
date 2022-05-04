@@ -93,7 +93,7 @@ async function getAluminiByName(req, res) {
   const data = await Profile.find({ name });
 
   if (data.length === 0) {
-    res.json({ error: "Profile Not Found" });
+    res.json([]);
     return;
   }
   res.json(data);

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { signin } from "../src/features/authSlice";
 
-export default function profile() {
+export default function ProfilePage() {
   const dispatch = useDispatch();
   const router = useRouter();
 

@@ -9,7 +9,7 @@ export default function UpdateImage({
   type,
 }: {
   url: string;
-  type: string;
+  type?: string;
 }) {
   const token = useSelector<any>((state) => state.auth.value);
   const dispatch = useDispatch();
@@ -51,7 +51,6 @@ export default function UpdateImage({
     const path = e.target.value;
     const name = path.split("\\")[2];
     setImage(name);
-    // openFile(false);
   }
 
   if (loading) {
@@ -69,7 +68,7 @@ export default function UpdateImage({
           {image}
         </p>
       ) : (
-        <a href={url} target="_blank">
+        <a href={url} target="_blank" rel="noreferrer">
           <img
             src={`${url}`}
             className="w-60 h-56 object-cover flex items-center justify-center"

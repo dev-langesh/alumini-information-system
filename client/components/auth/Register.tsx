@@ -118,7 +118,7 @@ export default function Register() {
   }
 
   return (
-    <section className="w-screen h-screen grid place-items-center">
+    <section className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <Error error={error} />
       <form
         onSubmit={handleSubmit}
@@ -179,10 +179,3 @@ export default function Register() {
     </section>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  console.log("connected to mongodb");
-  return {
-    props: {},
-  };
-};

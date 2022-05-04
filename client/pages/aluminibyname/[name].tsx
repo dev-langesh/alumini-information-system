@@ -1,15 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import axios from "axios";
 import AluminiCard from "../../components/home/AluminiCard";
+import Loading from "../../components/common/Loading";
 
-export default function Alumini({ data }: any) {
+export default function Alumini(props: any) {
+  const [data, setData] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
   useEffect(() => {
-    console.log(data);
-  }, []);
+    if (props.data) {
+      setData(props.data);
+      setLoading(false);
+    }
+  }, [props]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <section className="grid grid-cols-12 gap-8 ">
+      {data.length === 0 && (
+        <div className=" text-lg text-slate-500 col-span-12 text-center p-8">
+          No Profile Data
+        </div>
+      )}
       {data.map((item: any) => {
         return <AluminiCard key={`${item.id}`} {...item} />;
       })}
@@ -29,7 +45,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   });
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 };
 

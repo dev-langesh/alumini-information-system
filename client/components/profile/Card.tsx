@@ -21,6 +21,7 @@ export default function Card({
   const [error, setError] = useState<string | null>(null);
 
   const token = useSelector<any>((state) => state.auth.value);
+
   useEffect(() => {
     if (error) {
       setValue(children);

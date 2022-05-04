@@ -22,7 +22,7 @@ export default function AluminiCard({
 }: aluminiType) {
   return (
     <article className="flex space-x-4 items-center p-4 shadow col-span-12 md:col-span-6 ">
-      <a href={img} target="_blank">
+      <a href={img} target="_blank" rel="noreferrer">
         <img
           src={`${img}`}
           alt="image not found"
