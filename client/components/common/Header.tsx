@@ -6,16 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useLayoutEffect, useState } from "react";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useRouter } from "next/router";
+import { setProfiles } from "../../src/features/profiles";
+import axios from "axios";
 
 export default function Header() {
   const dispatch = useDispatch();
   const auth = useSelector<any>((state) => state.auth.value);
   const router = useRouter();
-  const [search, setSearch] = useState<String | null>(null);
-
-  useEffect(() => {
-    search;
-  }, [search]);
+  const [searchValue, setSearchValue] = useState<String | null>(null);
+  const profile: any = useSelector<any>((state) => state.profiles.value);
 
   useEffect(() => {
     const cookie = document.cookie;
@@ -25,6 +24,37 @@ export default function Header() {
       }
     });
   }, []);
+
+  useEffect(() => {
+    async function search() {
+      if (searchValue === "") {
+        const response = await axios.get(
+          "http://localhost:8000/api/get-all-profile"
+        );
+        dispatch(setProfiles(response.data));
+        return;
+      }
+
+      const filtered = profile.filter((val: any) => {
+        return val.name.startsWith(searchValue?.trim());
+      });
+
+      if (filtered.length !== 0) {
+        dispatch(setProfiles(filtered));
+        return;
+      }
+
+      if (filtered.length === 0) {
+        const response = await axios.get(
+          "http://localhost:8000/api/get-all-profile"
+        );
+        dispatch(setProfiles(response.data));
+        return;
+      }
+    }
+
+    search();
+  }, [searchValue]);
 
   const signout = () => {
     document.cookie = `token=; max-age=${0}`;
@@ -37,17 +67,14 @@ export default function Header() {
       <Link href="/">
         <a className="text-lg tracking-wide text-white font-slab">AIS</a>
       </Link>{" "}
-      <form
-        action={`/aluminibyname/${search}`}
-        className="hidden sm:block flex-1"
-      >
+      <div className="hidden sm:block flex-1">
         <input
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => setSearchValue(e.target.value)}
           type="text"
           placeholder="Search..."
           className="border px-3 py-1 w-full outline-none focus:border-white bg-transparent placeholder:text-white"
         />
-      </form>
+      </div>
       <section className="hidden sm:block space-x-7">
         {auth ? (
           <>

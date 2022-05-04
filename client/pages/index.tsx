@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { GetStaticProps, NextPage } from "next";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Container from "../components/home/Container";
 import { setProfiles } from "../src/features/profiles";
