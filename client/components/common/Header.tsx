@@ -17,7 +17,7 @@ export default function Header() {
     search;
   }, [search]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const cookie = document.cookie;
     cookie.split("; ").forEach((item) => {
       if (item.startsWith("token=")) {

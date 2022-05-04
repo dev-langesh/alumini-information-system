@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { GetStaticProps, NextPage } from "next";
-import { useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { useDispatch } from "react-redux";
 import Container from "../components/home/Container";
 import { setProfiles } from "../src/features/profiles";
@@ -8,7 +8,7 @@ import { setProfiles } from "../src/features/profiles";
 const Home: NextPage = (props: any) => {
   const dispatch = useDispatch();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch(setProfiles(props.data));
   }, [props]);
 
