@@ -122,7 +122,7 @@ export default function Register() {
       <Error error={error} />
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col shadow-0 us:px-10 p-5 justify-center h-screen w-screen sm:w-[300px] sm:h-auto shadow-lg rounded-xl"
+        className="flex flex-col shadow-0 us:px-10 p-5 justify-center w-screen sm:w-[300px] sm:h-auto shadow-lg rounded-xl"
       >
         <h1 className="text-3xl pb-8 font-slab text-orange-500 tracking-wider text-center">
           Register

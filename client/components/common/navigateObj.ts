@@ -4,7 +4,19 @@ type navObjType = {
   href: string;
 }[];
 
-export const navObj: navObjType = [
+export const navWithAuthObj: navObjType = [
+  {
+    key: 0,
+    title: "Profile",
+    href: "/profile",
+  },
+  {
+    key: 1,
+    title: "Notifications",
+    href: "/notifications",
+  },
+];
+export const navWithoutAuthObj: navObjType = [
   {
     key: 0,
     title: "Register",
@@ -12,12 +24,7 @@ export const navObj: navObjType = [
   },
   {
     key: 1,
-    title: "Notifications",
-    href: "/notifications",
-  },
-  {
-    key: 2,
-    title: "Profile",
-    href: "/profile",
+    title: "Login",
+    href: "/login",
   },
 ];

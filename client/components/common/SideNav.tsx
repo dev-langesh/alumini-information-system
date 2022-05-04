@@ -1,16 +1,42 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { navObj } from "./navigateObj";
+import { navWithAuthObj, navWithoutAuthObj } from "./navigateObj";
 import { useDispatch, useSelector } from "react-redux";
 import { close } from "../../src/features/sidebarSlice";
+import { useRouter } from "next/router";
+import { logout } from "../../src/features/authSlice";
+
+type objType = {
+  key: number;
+  title: string;
+  href: string;
+}[];
 
 export default function SideNav() {
   const state = useSelector<"open" | "close" | any>((s) => s.sidebar.value);
+  const auth = useSelector<any>((state) => state.auth.value);
   const dispatch = useDispatch();
+  const [navObj, setNavObj] = useState<objType>([] as objType);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (auth) {
+      setNavObj(navWithAuthObj);
+      return;
+    }
+    setNavObj(navWithoutAuthObj);
+  }, [auth]);
 
   function closeSideBar() {
     dispatch(close());
   }
+
+  const signout = () => {
+    closeSideBar();
+    document.cookie = `token=; max-age=${0}`;
+    dispatch(logout());
+    router.push("/");
+  };
 
   return (
     <aside
@@ -27,17 +53,28 @@ export default function SideNav() {
         </a>
       </Link>
       <nav className="flex flex-col space-y-1 flex-1">
-        {navObj.map((item) => {
-          return (
-            <Navigate
-              close={closeSideBar}
-              key={item.key}
-              href={item.href}
-              title={item.title}
-            />
-          );
-        })}
+        <>
+          {navObj.map((item) => {
+            return (
+              <Navigate
+                close={closeSideBar}
+                key={item.key}
+                href={item.href}
+                title={item.title}
+              />
+            );
+          })}
+          {auth && (
+            <button
+              onClick={signout}
+              className="block text-left hover:bg-orange-50 hover:text-orange-600 p-3 hover:tracking-widest hover:border-r-4 border-orange-400 transition-all duration-150"
+            >
+              Logout
+            </button>
+          )}
+        </>
       </nav>
+
       <footer>
         <button
           onClick={closeSideBar}

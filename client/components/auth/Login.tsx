@@ -96,7 +96,7 @@ export default function Login() {
       <Error error={error} />
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col shadow-lg us:px-10 p-5 justify-center h-screen w-screen sm:w-[300px] sm:h-auto rounded-lg"
+        className="flex flex-col shadow-lg us:px-10 p-5 justify-center w-screen sm:w-[300px] sm:h-auto rounded-lg"
       >
         <h1 className="text-3xl pb-8 font-slab text-center text-orange-500 tracking-wider">
           Login
