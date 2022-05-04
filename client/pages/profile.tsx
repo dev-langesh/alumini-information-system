@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import Profile from "../components/profile/Profile";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
@@ -8,7 +8,7 @@ export default function ProfilePage() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const cookie = document.cookie;
     cookie.split("; ").forEach((item) => {
       if (item.startsWith("token=")) {

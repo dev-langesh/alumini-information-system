@@ -67,5 +67,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   return {
     props: response.data,
+    revalidate: 5,
   };
 };
