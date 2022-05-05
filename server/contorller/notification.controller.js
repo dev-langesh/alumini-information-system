@@ -8,13 +8,23 @@ async function setMessage(req, res) {
   console.log(req.body);
 
   try {
-    const obj = await Notification.create({ user: name, message });
+    await Notification.create({ user: name, message });
+    const data = await Notification.find({});
 
-    console.log(obj);
-    res.send("Set message");
+    res.json(data);
   } catch (err) {
     if (err) console.log(err);
   }
 }
 
-module.exports = { setMessage };
+// GET /api/get-messages
+async function getMessages(req, res) {
+  try {
+    const response = await Notification.find({});
+    res.json(response);
+  } catch (err) {
+    if (err) console.log(err);
+  }
+}
+
+module.exports = { setMessage, getMessages };

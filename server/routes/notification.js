@@ -1,6 +1,10 @@
 const router = require("express").Router();
-const { setMessage } = require("../contorller/notification.controller");
+const {
+  setMessage,
+  getMessages,
+} = require("../contorller/notification.controller");
 
 router.post("/set-message", setMessage);
+router.get("/get-messages", getMessages);
 
 module.exports = router;
