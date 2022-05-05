@@ -1,10 +1,31 @@
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
+const http = require("http");
+const { Server } = require("socket.io");
 const { corsOptions } = require("./config/corsOptions");
+const { notificationModel } = require("./model/notification.model");
 
 //initializing app
 const app = express();
+
+//http server
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
+
+io.on("connection", (socket) => {
+  socket.on("send_message", async (data) => {
+    await notificationModel.create({ user: data.name, message: data.message });
+    const res = await notificationModel.find({});
+
+    socket.broadcast.emit("receive_message", res);
+  });
+});
 
 //configuring env
 require("dotenv").config();
@@ -30,6 +51,6 @@ app.use("/", (req, res) => {
 //error handler
 app.use(require("./middlewares/error.middleware"));
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`);
 });
