@@ -4,6 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "../../src/features/aluminiSlice";
 import { setMessages } from "../../src/features/notification";
 import MessageCard from "./MessageCard";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:8000");
+
+socket.on("connect", () => {
+  console.log(socket.id);
+});
 
 export default function Notification() {
   const token = useSelector<any>((state) => state.auth.value);
@@ -12,6 +19,13 @@ export default function Notification() {
   const profile: any = useSelector<any>((state) => state.alumini.value);
   const [message, setMessage] = useState<string>("");
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      console.log(data);
+      dispatch(setMessages(data));
+    });
+  }, [socket]);
 
   useEffect(() => {
     async function getProfile() {
@@ -40,13 +54,12 @@ export default function Notification() {
     setMessage("");
     scrollToBottom();
 
-    if (message?.trim() !== "") {
-      const res = await axios.post("http://localhost:8000/api/set-message", {
-        name: profile?.name,
-        message: message.trim(),
-      });
-      dispatch(setMessages(res.data));
-    }
+    console.log(profile.name);
+
+    socket.emit("send_message", {
+      name: profile?.name,
+      message: message.trim(),
+    });
   }
 
   function scrollToBottom() {
@@ -64,6 +77,7 @@ export default function Notification() {
           {messages.map((item: any) => {
             return (
               <MessageCard
+                key={item._id}
                 name={item.user}
                 user={profile?.name}
                 message={item.message}
