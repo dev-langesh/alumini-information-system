@@ -21,6 +21,7 @@ app.use("/uploads", express.static("uploads"));
 app.use("/api/user", require("./routes/userRoutes"));
 app.use("/api/upload", require("./routes/uploadRoute"));
 app.use("/api", require("./routes/profile"));
+app.use("/api", require("./routes/notification"));
 
 app.use("/", (req, res) => {
   res.json({ message: "server is running" });

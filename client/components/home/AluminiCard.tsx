@@ -29,7 +29,7 @@ export default function AluminiCard({
           className="w-24 h-32 object-cover rounded "
         />
       </a>
-      <section className="w-auto  pl-3 flex-shrink-0">
+      <section className="w-40  pl-3 flex-shrink-0">
         <h1 className="text-lg text-orange-500 font-slab">{name}</h1>
         <p className="text-slate-600">{job}</p>
 

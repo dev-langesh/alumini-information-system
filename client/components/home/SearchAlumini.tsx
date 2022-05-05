@@ -50,12 +50,8 @@ export default function Form() {
     search();
   }, [value]);
 
-  const handleSubmit = async (event: React.SyntheticEvent) => {
-    event.preventDefault();
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="sm:hidden">
+    <div className="sm:hidden">
       <Error error={error} />
       <section className="flex items-center flex-col us:flex-row ">
         <Input
@@ -65,13 +61,7 @@ export default function Form() {
             setError("");
           }}
         />
-        <button
-          className="bg-amber-500 py-2 px-6 us:mt-0 us:ml-2 text-white block w-full  us:w-auto shadow-md"
-          type="submit"
-        >
-          {"Find"}
-        </button>
       </section>
-    </form>
+    </div>
   );
 }

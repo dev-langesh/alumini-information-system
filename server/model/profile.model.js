@@ -21,6 +21,6 @@ const schema = mongoose.Schema(
   { collection: "profile" }
 );
 
-const Profile = mongoose.model("profile", schema);
+const Profile = mongoose.model("Profiles", schema);
 
 module.exports = { Profile };
