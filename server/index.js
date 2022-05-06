@@ -9,24 +9,6 @@ const { notificationModel } = require("./model/notification.model");
 //initializing app
 const app = express();
 
-//http server
-const server = http.createServer(app);
-
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000",
-  },
-});
-
-io.on("connection", (socket) => {
-  socket.on("send_message", async (data) => {
-    await notificationModel.create({ user: data.name, message: data.message });
-    const res = await notificationModel.find({});
-
-    socket.broadcast.emit("receive_message", res);
-  });
-});
-
 //configuring env
 require("dotenv").config();
 const port = process.env.PORT || 5001;
@@ -43,6 +25,22 @@ app.use("/api/user", require("./routes/userRoutes"));
 app.use("/api/upload", require("./routes/uploadRoute"));
 app.use("/api", require("./routes/profile"));
 app.use("/api", require("./routes/notification"));
+
+//http server
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: "http://localhost:3000",
+});
+
+io.on("connection", (socket) => {
+  socket.on("send_message", async (data) => {
+    await notificationModel.create({ user: data.name, message: data.message });
+    const res = await notificationModel.find({});
+
+    socket.broadcast.emit("receive_message", res);
+  });
+});
 
 app.use("/", (req, res) => {
   res.json({ message: "server is running" });

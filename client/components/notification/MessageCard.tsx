@@ -11,8 +11,8 @@ export default function MessageCard({
 }) {
   return (
     <div
-      className={`p-2 bg-white shadow m-2 w-[300px] ${
-        user === name && "float-right clear-right"
+      className={`p-2 bg-white shadow m-2 w-[200px] text-sm md:text-md md:w-[300px] ${
+        user === name && "self-end"
       }`}
     >
       <span className="text-sm text-orange-500 pb-2 inline-block">{name}</span>

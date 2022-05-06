@@ -5,25 +5,22 @@ import { setProfile } from "../../src/features/aluminiSlice";
 import { setMessages } from "../../src/features/notification";
 import MessageCard from "./MessageCard";
 import { io } from "socket.io-client";
-
 const socket = io("http://localhost:8000");
-
-socket.on("connect", () => {
-  console.log(socket.id);
-});
 
 export default function Notification() {
   const token = useSelector<any>((state) => state.auth.value);
-  const messages: any = useSelector<any>((state) => state.messages.value);
-  const dispatch = useDispatch();
   const profile: any = useSelector<any>((state) => state.alumini.value);
+  const messages: any = useSelector<any>((state) => state.messages.value);
   const [message, setMessage] = useState<string>("");
+  const dispatch = useDispatch();
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    socket.on("receive_message", (data) => {
-      console.log(data);
-      dispatch(setMessages(data));
+    socket.on("connect", () => {
+      console.log(socket.id);
+      socket.on("receive_message", (data) => {
+        dispatch(setMessages(data));
+      });
     });
   }, [socket]);
 
@@ -38,8 +35,6 @@ export default function Notification() {
         }
       );
 
-      console.log(response.data);
-
       dispatch(setProfile(response.data));
     }
     if (token) getProfile();
@@ -53,13 +48,20 @@ export default function Notification() {
     e.preventDefault();
     setMessage("");
     scrollToBottom();
-
-    console.log(profile.name);
-
-    socket.emit("send_message", {
+    const msg = {
       name: profile?.name,
       message: message.trim(),
+    };
+    const updatedMessage = JSON.parse(JSON.stringify(messages));
+    updatedMessage.push({
+      _id: Math.ceil(Math.random() * 10000 + Math.random() * 10000),
+      user: profile?.name,
+      message: message.trim(),
     });
+
+    dispatch(setMessages(updatedMessage));
+
+    socket.emit("send_message", msg);
   }
 
   function scrollToBottom() {
@@ -71,34 +73,32 @@ export default function Notification() {
   }
 
   return (
-    <section className="flex justify-around px-4 py-2 h-[90%] ">
-      <div className="overflow-auto w-2/3 scroll-smooth hide-scroll flex flex-col">
-        <main className="shadow bg-zinc-50 ">
-          {messages.map((item: any) => {
-            return (
-              <MessageCard
-                key={item._id}
-                name={item.user}
-                user={profile?.name}
-                message={item.message}
-              />
-            );
-          })}
-          <div
-            ref={scrollRef}
-            className=" invisible h-40 float-right clear-right"
-          ></div>
-        </main>
-      </div>
+    <section className="flex justify-around px-4 py-2 h-[90%] flex-col md:flex-row ">
+      <main className="shadow bg-zinc-50 overflow-auto w-full scroll-smooth hide-scroll flex flex-col ">
+        {messages.map((item: any) => {
+          return (
+            <MessageCard
+              key={item._id}
+              name={item.user}
+              user={profile?.name}
+              message={item.message}
+            />
+          );
+        })}
+        <div
+          ref={scrollRef}
+          className=" invisible h-40 float-right clear-right"
+        ></div>
+      </main>
       <form
         onSubmit={sendMessage}
-        className="h-full justify-center flex flex-col p-2"
+        className="h-full justify-center flex flex-col md:p-2"
       >
         <input
           value={message!}
           type="text"
           onChange={(e) => setMessage(e.target.value)}
-          className="border  w-[300px] p-1 outline-none focus:border-orange-500 "
+          className="border w-full mt-11 md:mt-0  md:w-[300px] p-1 outline-none focus:border-orange-500 "
         />
         <button className="bg-orange-500 w-full py-1 text-white  border border-orange-400 hover:bg-orange-600 hover:tracking-widest transition-all duration-150">
           Send
