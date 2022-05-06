@@ -1,3 +1,5 @@
+const { profileValidator } = require("../config/profileValidator");
+const { validateEmail } = require("../config/validateEmail");
 const { Profile } = require("../model/profile.model");
 
 // POST api / upload
@@ -31,6 +33,11 @@ async function uploadImage(req, res) {
   }
 
   try {
+    if (!profileValidator(req.body)) {
+      res.json({ error: "Invalid Credentials" });
+      return;
+    }
+
     const data = await Profile.create({
       user: req.id,
       name,

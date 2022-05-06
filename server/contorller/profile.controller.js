@@ -1,5 +1,7 @@
 const { Profile } = require("../model/profile.model");
 const jwt = require("jsonwebtoken");
+const { validateEmail } = require("../config/validateEmail");
+const { profileValidator } = require("../config/profileValidator");
 
 // PRIVATE
 // GET /api/get-profile
@@ -49,6 +51,11 @@ async function updateProfile(req, res) {
   const token = req.body.token;
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   try {
+    if (!profileValidator(req.body)) {
+      res.json({ error: "Invalid Credentials" });
+      return;
+    }
+
     const data = await Profile.findOne({ user: decoded.id });
 
     if (data) {
@@ -61,6 +68,7 @@ async function updateProfile(req, res) {
     }
   } catch (err) {
     if (err) {
+      console.log(err);
       res.json({ error: "Invalid Entry" });
       return;
     }
