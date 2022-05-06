@@ -5,6 +5,7 @@ import { setProfile } from "../../src/features/aluminiSlice";
 import { setMessages } from "../../src/features/notification";
 import MessageCard from "./MessageCard";
 import { io } from "socket.io-client";
+
 const socket = io("http://localhost:8000");
 
 export default function Notification() {
@@ -73,8 +74,8 @@ export default function Notification() {
   }
 
   return (
-    <section className="flex justify-around px-4 py-2 h-[90%] flex-col md:flex-row ">
-      <main className="shadow bg-orange-50 overflow-auto w-full scroll-smooth hide-scroll flex flex-col ">
+    <section className="flex justify-around  h-[90%] flex-col  w-full  ">
+      <main className=" overflow-auto w-full scroll-smooth hide-scroll flex flex-col ">
         {messages.map((item: any) => {
           return (
             <MessageCard
@@ -92,15 +93,15 @@ export default function Notification() {
       </main>
       <form
         onSubmit={sendMessage}
-        className="md:h-full md:ml-4  justify-center flex flex-col md:p-2"
+        className=" w-11/12 flex-col sm:flex-row sm:w-[500px] m-auto  justify-center flex mt-6  p-2"
       >
         <input
           value={message!}
           type="text"
           onChange={(e) => setMessage(e.target.value)}
-          className="border w-full mt-6  md:mt-0  md:w-[300px] p-1 outline-none focus:border-orange-500 "
+          className="border w-full  p-1 outline-none focus:border-orange-500 "
         />
-        <button className="bg-orange-500 w-full py-1 text-white  border border-orange-400 hover:bg-orange-600 hover:tracking-widest transition-all duration-150">
+        <button className="bg-orange-600 w-full sm:w-32 py-1 text-white  border border-orange-400 hover:bg-orange-600 hover:tracking-widest transition-all duration-150">
           Send
         </button>
       </form>
