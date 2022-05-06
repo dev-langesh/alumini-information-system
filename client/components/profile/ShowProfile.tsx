@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Card from "./Card";
+import PastRecords from "./PastRecord";
 import UpdateDescription from "./UpdateDescription";
 import UpdateImage from "./UpdateImage";
 
@@ -21,7 +22,10 @@ export default function ShowProfile() {
           <Card fieldName={"degree"}>{profile.degree}</Card>
           <Card fieldName={"batch"}>{profile.batch}</Card>
         </section>
-        <UpdateDescription description={profile.description} />
+        <footer>
+          <PastRecords records={profile.records} />
+          <UpdateDescription description={profile.description} />
+        </footer>
       </main>
     </article>
   );

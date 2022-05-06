@@ -17,6 +17,7 @@ const schema = mongoose.Schema(
     location: { type: String, required: true },
     img: { type: String, unique: true, required: true },
     description: String,
+    records: String,
   },
   { collection: "profile" }
 );

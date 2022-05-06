@@ -4,6 +4,7 @@ import axios from "axios";
 import Card from "../../components/profile/Card";
 import UpdateImage from "../../components/profile/UpdateImage";
 import UpdateDescription from "../../components/profile/UpdateDescription";
+import PastRecords from "../../components/profile/PastRecord";
 
 export default function Alumini(props: any) {
   return (
@@ -36,7 +37,10 @@ export default function Alumini(props: any) {
             {props.phone}
           </Card>
         </section>
-        <UpdateDescription type="view" description={props.description} />
+        <footer>
+          <PastRecords type="view" records={props.records} />
+          <UpdateDescription type="view" description={props.description} />
+        </footer>
       </main>
     </article>
   );

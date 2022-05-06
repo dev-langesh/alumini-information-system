@@ -6,11 +6,11 @@ import CheckIcon from "@mui/icons-material/Check";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 
-export default function UpdateDescription({
-  description,
+export default function PastRecords({
+  records,
   type,
 }: {
-  description: string;
+  records: string;
   type?: string;
 }) {
   const [edit, setEdit] = useState<boolean>(false);
@@ -27,12 +27,12 @@ export default function UpdateDescription({
   }, [error]);
 
   useEffect(() => {
-    setValue(description);
-  }, [description]);
+    setValue(records);
+  }, [records]);
 
   async function updateHandler() {
     const res = await axios.post("http://localhost:8000/api/update-profile", {
-      description: value,
+      records: value,
       token,
     });
     setEdit(false);
@@ -44,8 +44,7 @@ export default function UpdateDescription({
   return (
     <section className="m-5 md:ml-0 flex items-center flex-col flex-shrink-1 ">
       <div className="w-full lg:w-[400px] h-[200px] shadow ml-5 p-4 relative">
-        <h1 className="text-orange-500">Description</h1>
-
+        <h1 className="text-orange-500">Past Records</h1>
         {edit ? (
           <textarea
             value={value}
@@ -54,7 +53,7 @@ export default function UpdateDescription({
             className="w-full h-full  outline-none   p-2"
           ></textarea>
         ) : (
-          <p className="text-slate-500">{value ? value : "No Description"}</p>
+          <p className="text-slate-500">{value ? value : "No Records"}</p>
         )}
         <footer className="absolute bottom-2 right-2">
           {type === "view" ? null : edit ? (
@@ -64,7 +63,7 @@ export default function UpdateDescription({
               </IconButton>
               <IconButton
                 onClick={() => {
-                  setValue(description);
+                  setValue(records);
                   setEdit(false);
                 }}
                 sx={{ color: "red" }}

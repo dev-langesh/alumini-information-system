@@ -87,6 +87,12 @@ export default function CreateProfile() {
             );
           })}
           <textarea
+            name="records"
+            onChange={changeHandler}
+            placeholder="Past Records"
+            className="border focus:border-orange-500 focus:ring ring-orange-100 outline-none p-4 ml-6 mt-6 !h-40 w-96 lg:hidden block "
+          ></textarea>
+          <textarea
             name="description"
             cols={80}
             rows={40}
@@ -94,6 +100,7 @@ export default function CreateProfile() {
             placeholder="About You..."
             className="border focus:border-orange-500 focus:ring ring-orange-100 outline-none p-4 mt-6 !h-40 w-full lg:hidden block "
           ></textarea>
+
           <button
             type="submit"
             className="bg-orange-500 p-2 text-white text-center border border-orange-500  hover:ring-2 ring-orange-500 ring-offset-2  tracking-wider"
@@ -101,12 +108,20 @@ export default function CreateProfile() {
             Submit
           </button>
         </section>
-        <textarea
-          name="description"
-          onChange={changeHandler}
-          placeholder="About You..."
-          className="border focus:border-orange-500 focus:ring ring-orange-100 outline-none p-4 ml-6 mt-6 !h-40 w-96 hidden lg:block "
-        ></textarea>
+        <section className=" hidden lg:block">
+          <textarea
+            name="records"
+            onChange={changeHandler}
+            placeholder="Past Records"
+            className="border focus:border-orange-500 focus:ring ring-orange-100 outline-none p-4 ml-6 mt-6 !h-40 w-96 block "
+          ></textarea>
+          <textarea
+            name="description"
+            onChange={changeHandler}
+            placeholder="About You..."
+            className="border focus:border-orange-500 focus:ring ring-orange-100 outline-none p-4 ml-6 mt-6 !h-40 w-96 block "
+          ></textarea>
+        </section>
       </form>
     </>
   );

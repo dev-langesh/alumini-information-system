@@ -14,6 +14,7 @@ async function uploadImage(req, res) {
     email,
     phone,
     location,
+    records,
   } = req.body;
 
   if (
@@ -26,7 +27,8 @@ async function uploadImage(req, res) {
     !email ||
     !phone ||
     !location ||
-    !req.file
+    !req.file ||
+    !records
   ) {
     res.json({ error: "Fill all the credentials" });
     return;
@@ -49,6 +51,7 @@ async function uploadImage(req, res) {
       location,
       degree,
       phone,
+      records: records[1],
       img: `http://localhost:${process.env.PORT}/${req.file.path}`,
     });
   } catch (err) {
