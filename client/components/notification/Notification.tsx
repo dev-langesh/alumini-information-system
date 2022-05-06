@@ -74,7 +74,7 @@ export default function Notification() {
 
   return (
     <section className="flex justify-around px-4 py-2 h-[90%] flex-col md:flex-row ">
-      <main className="shadow bg-zinc-50 overflow-auto w-full scroll-smooth hide-scroll flex flex-col ">
+      <main className="shadow bg-orange-50 overflow-auto w-full scroll-smooth hide-scroll flex flex-col ">
         {messages.map((item: any) => {
           return (
             <MessageCard
@@ -92,13 +92,13 @@ export default function Notification() {
       </main>
       <form
         onSubmit={sendMessage}
-        className="h-full justify-center flex flex-col md:p-2"
+        className="md:h-full md:ml-4  justify-center flex flex-col md:p-2"
       >
         <input
           value={message!}
           type="text"
           onChange={(e) => setMessage(e.target.value)}
-          className="border w-full mt-11 md:mt-0  md:w-[300px] p-1 outline-none focus:border-orange-500 "
+          className="border w-full mt-6  md:mt-0  md:w-[300px] p-1 outline-none focus:border-orange-500 "
         />
         <button className="bg-orange-500 w-full py-1 text-white  border border-orange-400 hover:bg-orange-600 hover:tracking-widest transition-all duration-150">
           Send

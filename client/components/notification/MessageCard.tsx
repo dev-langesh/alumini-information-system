@@ -11,7 +11,7 @@ export default function MessageCard({
 }) {
   return (
     <div
-      className={`p-2 bg-white shadow m-2 w-[200px] text-sm md:text-md md:w-[300px] ${
+      className={`p-2 bg-white shadow m-2 w-[200px] text-sm md:text-md md:w-[300px] lg:w-[350px] ${
         user === name && "self-end"
       }`}
     >
