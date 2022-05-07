@@ -7,12 +7,19 @@ const {
   loginUser,
   verifyEmail,
   changePassword,
+  sendMailToChangeForgotPassword,
+  changeForgetPassword,
 } = require("../contorller/user.controller.js");
 
-router.post("/register", registerUser);
 router.get("/getUser", protect, getUser);
-router.post("/login", loginUser);
 router.get("/verify-email/:id", verifyEmail);
+router.post(
+  "/send-mail-to-change-forget-password",
+  sendMailToChangeForgotPassword
+);
+router.post("/register", registerUser);
+router.post("/login", loginUser);
 router.put("/change-password", changePassword);
+router.put("/change-forgot-password", changeForgetPassword);
 
 module.exports = router;

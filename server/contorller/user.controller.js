@@ -8,7 +8,6 @@ const { sendMail } = require("../config/sendMail");
 // @desc     register user
 // @route    POST /api/user/register
 // @access   Public
-
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   console.log(req.body);
@@ -37,6 +36,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   await sendMail({
     email,
+    link: `http://localhost:3000/verify-email/${user._id}`,
     subject: "Verifing Email for AIS Registeration",
   });
 
@@ -137,10 +137,54 @@ async function changePassword(req, res) {
   }
 }
 
+// @desc    change forgot password
+// @route   GET /api/user/send-mail-to-change-forgot-password
+// @access  private
+async function sendMailToChangeForgotPassword(req, res) {
+  const email = req.body.email;
+  console.log(email);
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    res.json({ error: "User Not Found" });
+    return;
+  }
+
+  try {
+    await sendMail({
+      email: email,
+      link: `http://localhost:3000/forget-password/${user._id}`,
+      subject: "Change Password For AIS",
+    });
+  } catch (err) {
+    console.log(err);
+  }
+
+  res.json({ status: "Mail sent success fully" });
+}
+
+async function changeForgetPassword(req, res) {
+  const { id, password } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  try {
+    const user = await User.findByIdAndUpdate(id, {
+      $set: { password: hashedPassword },
+    });
+    res.json({ status: "Password Updated" });
+  } catch (err) {
+    console.log(err);
+    res.json({ error: "User Not Found" });
+  }
+}
+
 module.exports = {
   registerUser,
   getUser,
   loginUser,
   verifyEmail,
   changePassword,
+  sendMailToChangeForgotPassword,
+  changeForgetPassword,
 };

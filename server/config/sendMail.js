@@ -1,9 +1,7 @@
 const nodemailer = require("nodemailer");
-const { User } = require("../model/users.model");
 
 async function sendMail(props) {
-  const user = await User.findOne({ email: props.email });
-
+  console.log(props);
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -12,29 +10,25 @@ async function sendMail(props) {
     },
   });
 
-  if (user) {
-    try {
-      transporter.sendMail(
-        {
-          from: "alumini.info.srec@gmail.com",
-          to: props.email,
-          subject: props.subject,
-          html: `<a href="http://localhost:3000/verify-email/${user._id}">http://localhost:3000/verify-email/${user._id}</a>`,
-        },
-        (err, res) => {
-          if (err) console.log(err);
-          else {
-            console.log("email sent successfully");
-            return;
-          }
+  try {
+    transporter.sendMail(
+      {
+        from: "alumini.info.srec@gmail.com",
+        to: props.email,
+        subject: props.subject,
+        html: `<a href=${props.link}>Click Here</a>`,
+      },
+      (err) => {
+        if (err) console.log(err);
+        else {
+          console.log("email sent successfully");
+          return;
         }
-      );
-    } catch (err) {
-      res.json({ error: "Invalid Credentials" });
-      return;
-    }
-  } else {
-    console.log("user not found");
+      }
+    );
+  } catch (err) {
+    res.json({ error: "Invalid Credentials" });
+    return;
   }
 }
 

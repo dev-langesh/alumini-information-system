@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import Error from "../components/common/Error";
+import Error from "../../components/common/Error";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { signin } from "../src/features/authSlice";
+import { signin } from "../../src/features/authSlice";
 import axios from "axios";
 
 type formtype = {
@@ -21,12 +21,12 @@ interface inputType {
 
 const inputObj: inputType[] = [
   {
-    id: 0,
+    id: 1,
     placeholder: "Enter New Password",
     name: "password",
   },
   {
-    id: 1,
+    id: 2,
     placeholder: "Confirm Password",
     name: "confirmPassword",
   },
@@ -37,9 +37,9 @@ export default function ChangePassword() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const token = useSelector<any>((state) => state.auth.value);
-
-  const dispatch = useDispatch();
   const router = useRouter();
+
+  const { id } = router.query;
 
   useEffect(() => {
     if (error) {
@@ -59,17 +59,20 @@ export default function ChangePassword() {
       setError("Password Doesn't match");
       return;
     }
-    const response = await axios.post(
-      "http://localhost:8000/api/user/change-password",
+    console.log(id);
+    const response = await axios.put(
+      "http://localhost:8000/api/user/change-forgot-password",
       {
-        token,
+        id,
         password: formdata.confirmPassword,
       }
     );
     const data = response.data;
     if (data.error) {
       setError(data.error);
+      return;
     }
+    router.push("/login");
   };
 
   return (
@@ -86,20 +89,28 @@ export default function ChangePassword() {
                 <input
                   {...item}
                   id={`${item.id}`}
-                  type={showPassword ? "text" : "password"}
+                  type={
+                    item.name === "email"
+                      ? "text"
+                      : showPassword
+                      ? "text"
+                      : "password"
+                  }
                   onChange={changeHandler}
                   className={`border px-4 py-2 w-full block focus:border-orange-500 outline-none relative`}
                 />
-                <IconButton
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  sx={{ position: "absolute", top: "1px", right: "8px" }}
-                >
-                  {showPassword ? (
-                    <VisibilityOffIcon sx={{ color: "orange" }} />
-                  ) : (
-                    <RemoveRedEyeIcon sx={{ color: "orange" }} />
-                  )}
-                </IconButton>
+                {item.name !== "email" && (
+                  <IconButton
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    sx={{ position: "absolute", top: "1px", right: "8px" }}
+                  >
+                    {showPassword ? (
+                      <VisibilityOffIcon sx={{ color: "orange" }} />
+                    ) : (
+                      <RemoveRedEyeIcon sx={{ color: "orange" }} />
+                    )}
+                  </IconButton>
+                )}
               </div>
             );
           })}
