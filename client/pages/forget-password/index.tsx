@@ -31,7 +31,8 @@ export default function ChangePassword() {
     e.preventDefault();
 
     const response = await axios.put(
-      "http://localhost:8000/api/user/send-mail-to-change-forgot-password",
+      "http://localhost:8000/api/user/send-mail-to-change-forget-password",
+
       {
         email: formdata.email,
       }
