@@ -108,4 +108,39 @@ async function verifyEmail(req, res) {
   }
 }
 
-module.exports = { registerUser, getUser, loginUser, verifyEmail };
+// @desc    change password
+// @route   /api/user/change-password
+// @access  private
+async function changePassword(req, res) {
+  const { password, token } = req.body;
+
+  if (!password || !token) {
+    res.json({ error: "Invalid Credentials" });
+    return;
+  }
+
+  try {
+    const { id } = jwt.decode(token, process.env.JWT_SECRET);
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await User.findByIdAndUpdate(id, {
+      $set: { password: hashedPassword },
+    });
+
+    console.log(user);
+
+    res.json({ status: "ok" });
+    return;
+  } catch (err) {
+    console.log(err);
+    res.send({ error: "User Not Found" });
+    return;
+  }
+}
+
+module.exports = {
+  registerUser,
+  getUser,
+  loginUser,
+  verifyEmail,
+  changePassword,
+};

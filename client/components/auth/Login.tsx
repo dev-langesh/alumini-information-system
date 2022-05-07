@@ -144,8 +144,14 @@ export default function Login() {
             </button>
           </main>
           <footer>
-            <Link href="/register">
+            <Link href="/forget-password">
               <a className="pt-4 inline-block hover:underline text-sm text-slate-500">
+                {"Forget Password?"}
+              </a>
+            </Link>
+            <br />
+            <Link href="/register">
+              <a className=" inline-block hover:underline text-sm text-slate-500">
                 {"Don't have an account?"}
               </a>
             </Link>
