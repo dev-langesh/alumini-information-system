@@ -5,10 +5,12 @@ const {
   registerUser,
   getUser,
   loginUser,
+  verifyEmail,
 } = require("../contorller/user.controller.js");
 
 router.post("/register", registerUser);
 router.get("/getUser", protect, getUser);
 router.post("/login", loginUser);
+router.get("/verify-email/:id", verifyEmail);
 
 module.exports = router;

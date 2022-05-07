@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 const { User } = require("../model/users.model");
 const generateToken = require("../config/generateJWT");
+const { sendMail } = require("../config/sendMail");
 
 // @desc     register user
 // @route    POST /api/user/register
@@ -13,7 +14,7 @@ const registerUser = asyncHandler(async (req, res) => {
   console.log(req.body);
 
   if (!name || !email || !password) {
-    res.status(400);
+    res.json({ error: "Fill all the fields" });
     throw new Error("Please add all fields");
   }
 
@@ -21,10 +22,8 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const userExists = await User.findOne({ email });
 
-  console.log(userExists);
-
   if (userExists) {
-    res.status(400);
+    res.json({ error: "Invalid Credentials" });
     throw new Error("User already exists");
   }
 
@@ -36,15 +35,17 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const user = await User.create({ name, email, password: hashedPassword });
 
+  await sendMail({
+    email,
+    subject: "Verifing Email for AIS Registeration",
+  });
+
   if (user) {
-    res.status(201).json({
-      _id: user.id,
-      name: user.name,
-      email: user.email,
-      token: generateToken(user.id),
+    res.json({
+      status: "ok",
     });
   } else {
-    res.status(403).json({ status: "Invalid credentials" });
+    res.json({ status: "Invalid credentials" });
   }
 });
 
@@ -58,9 +59,8 @@ const loginUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    res.status(400);
+    res.json({ error: "Invalid credentials" });
     throw new Error("User not found ");
-    res.send();
   }
 
   const isCorrectPassword = await bcrypt.compare(password, user.password);
@@ -74,7 +74,7 @@ const loginUser = asyncHandler(async (req, res) => {
       token: generateToken(user.id),
     });
   } else {
-    res.status(403).json({ message: "invalid credentials" });
+    res.json({ error: "Invalid credentials" });
   }
 });
 
@@ -87,4 +87,25 @@ const getUser = asyncHandler(async (req, res) => {
   res.json({ _id, name, email });
 });
 
-module.exports = { registerUser, getUser, loginUser };
+// @desc    verify email
+// @route   get /api/user/verify-email/:id
+// @access  Private
+async function verifyEmail(req, res) {
+  try {
+    const id = req.params.id;
+    const user = await User.findById(id);
+
+    if (user) {
+      res.json({ token: generateToken(id) });
+      return;
+    }
+  } catch (err) {
+    if (err) {
+      console.log(err);
+      res.json({ error: "Unauthorized" });
+      return;
+    }
+  }
+}
+
+module.exports = { registerUser, getUser, loginUser, verifyEmail };

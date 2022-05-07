@@ -3,8 +3,12 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 const http = require("http");
 const { Server } = require("socket.io");
+const Redis = require("ioredis");
 const { corsOptions } = require("./config/corsOptions");
 const { notificationModel } = require("./model/notification.model");
+const { sendMail } = require("./config/sendMail");
+
+const redis = new Redis();
 
 //initializing app
 const app = express();

@@ -92,64 +92,66 @@ export default function Login() {
   }
 
   return (
-    <section className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+    <>
       <Error error={error} />
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col shadow-lg us:px-10 p-5 justify-center w-screen sm:w-[300px] sm:h-auto rounded-lg"
-      >
-        <h1 className="text-3xl pb-8 font-slab text-center text-orange-500 tracking-wider">
-          Login
-        </h1>
-        <main className="flex flex-col space-y-4 items-center justify-center">
-          {inputObj.map((item) => {
-            return (
-              <div key={item.key} className=" relative w-full">
-                <input
-                  {...item}
-                  type={
-                    item.type === "password"
-                      ? showPassword
-                        ? "text"
-                        : "password"
-                      : "text"
-                  }
-                  onChange={handleChange}
-                  autoComplete="off"
-                  className={`border px-4 py-2 w-full block focus:border-orange-500 outline-none ${
-                    item.type === "password" ? "relative" : null
-                  }`}
-                />
-                {item.type === "password" ? (
-                  <IconButton
-                    onClick={() => setShowPassword((prev) => !prev)}
-                    sx={{ position: "absolute", top: "1px", right: "8px" }}
-                  >
-                    {showPassword ? (
-                      <VisibilityOffIcon sx={{ color: "orange" }} />
-                    ) : (
-                      <RemoveRedEyeIcon sx={{ color: "orange" }} />
-                    )}
-                  </IconButton>
-                ) : null}
-              </div>
-            );
-          })}
-          <button
-            type="submit"
-            className="px-6 py-2 w-full bg-orange-500 text-white  cursor-pointer hover:ring-2 ring-orange-500 ring-offset-2"
-          >
-            {loading ? "Loading..." : msg ? msg : "Submit"}
-          </button>
-        </main>
-        <footer>
-          <Link href="/register">
-            <a className="pt-4 block hover:underline text-sm text-slate-500">
-              {"Don't have an account?"}
-            </a>
-          </Link>
-        </footer>
-      </form>
-    </section>
+      <section className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col shadow-lg us:px-10 p-5 justify-center w-screen sm:w-[300px] sm:h-auto rounded-lg"
+        >
+          <h1 className="text-3xl pb-8 font-slab text-center text-orange-500 tracking-wider">
+            Login
+          </h1>
+          <main className="flex flex-col space-y-4 items-center justify-center">
+            {inputObj.map((item) => {
+              return (
+                <div key={item.key} className=" relative w-full">
+                  <input
+                    {...item}
+                    type={
+                      item.type === "password"
+                        ? showPassword
+                          ? "text"
+                          : "password"
+                        : "text"
+                    }
+                    onChange={handleChange}
+                    autoComplete="off"
+                    className={`border px-4 py-2 w-full block focus:border-orange-500 outline-none ${
+                      item.type === "password" ? "relative" : null
+                    }`}
+                  />
+                  {item.type === "password" ? (
+                    <IconButton
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      sx={{ position: "absolute", top: "1px", right: "8px" }}
+                    >
+                      {showPassword ? (
+                        <VisibilityOffIcon sx={{ color: "orange" }} />
+                      ) : (
+                        <RemoveRedEyeIcon sx={{ color: "orange" }} />
+                      )}
+                    </IconButton>
+                  ) : null}
+                </div>
+              );
+            })}
+            <button
+              type="submit"
+              className="px-6 py-2 w-full bg-orange-500 text-white  cursor-pointer hover:ring-2 ring-orange-500 ring-offset-2"
+            >
+              {loading ? "Loading..." : msg ? msg : "Submit"}
+            </button>
+          </main>
+          <footer>
+            <Link href="/register">
+              <a className="pt-4 inline-block hover:underline text-sm text-slate-500">
+                {"Don't have an account?"}
+              </a>
+            </Link>
+          </footer>
+        </form>
+      </section>
+    </>
   );
 }
