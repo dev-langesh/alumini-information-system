@@ -38,9 +38,6 @@ export default function ChangePassword() {
   const [error, setError] = useState<string>("");
   const token = useSelector<any>((state) => state.auth.value);
 
-  const dispatch = useDispatch();
-  const router = useRouter();
-
   useEffect(() => {
     if (error) {
       setTimeout(() => {

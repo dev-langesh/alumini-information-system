@@ -12,30 +12,15 @@ export default function Alumini(props: any) {
       <UpdateImage type="view" url={props.img} />
       <main className="flex lg:flex-row flex-col flex-1">
         <section className="flex flex-col  w-full flex-1 p-5  space-y-3">
-          <Card type="view" fieldName={"name"}>
-            {props.name}
-          </Card>
-          <Card type="view" fieldName={"job"}>
-            {props.job}
-          </Card>
-          <Card type="view" fieldName={"degree"}>
-            {props.degree}
-          </Card>
-          <Card type="view" fieldName={"batch"}>
-            {props.batch}
-          </Card>
-          <Card type="view" fieldName={"company"}>
-            {"Company : " + props.company}
-          </Card>
-          <Card type="view" fieldName={"location"}>
-            {props.location}
-          </Card>
-          <Card type="view" fieldName={"email"}>
-            {props.email}
-          </Card>
-          <Card type="view" fieldName={"phone"}>
-            {props.phone}
-          </Card>
+          <Card fieldName={"Name"} value={props.name}></Card>
+          <Card fieldName={"Email"} value={props.email}></Card>
+          <Card fieldName={"Phone"} value={props.phone}></Card>
+          <Card fieldName={"Degree"} value={props.degree}></Card>
+          <Card fieldName={"Batch"} value={props.batch}></Card>
+          <Card fieldName={"Company"} value={props.company}></Card>
+          <Card fieldName={"Location"} value={props.location}></Card>
+          <Card fieldName={"Job"} value={props.job}></Card>
+          <Card fieldName="linkedin" value={props.linkedin}></Card>
         </section>
         <footer>
           <PastRecords type="view" records={props.records} />

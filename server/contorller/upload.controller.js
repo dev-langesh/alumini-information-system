@@ -15,6 +15,7 @@ async function uploadImage(req, res) {
     phone,
     location,
     records,
+    linkedin,
   } = req.body;
 
   if (
@@ -27,7 +28,6 @@ async function uploadImage(req, res) {
     !email ||
     !phone ||
     !location ||
-    !req.file ||
     !records
   ) {
     res.json({ error: "Fill all the credentials" });
@@ -40,7 +40,9 @@ async function uploadImage(req, res) {
       return;
     }
 
-    const data = await Profile.create({
+    const imgPath = req.file ? req.file.path : "uploads/default.jpg";
+
+    await Profile.create({
       user: req.id,
       name,
       batch,
@@ -52,7 +54,8 @@ async function uploadImage(req, res) {
       degree,
       phone,
       records: records[1],
-      img: `http://localhost:${process.env.PORT}/${req.file.path}`,
+      img: `http://localhost:${process.env.PORT}/${imgPath}`,
+      linkedin,
     });
   } catch (err) {
     res.json({ error: "Duplicate Value", stack: err.stack });

@@ -6,25 +6,26 @@ import { IconButton } from "@mui/material";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Error from "../common/Error";
+import { spawn } from "child_process";
 
 export default function Card({
-  children,
+  value,
   fieldName,
   type,
 }: {
-  children: string;
+  value: string;
   fieldName: string;
   type?: string;
 }) {
   const [edit, setEdit] = useState<null | boolean>(null);
-  const [value, setValue] = useState<string | null>(null);
+  const [formValue, setValue] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const token = useSelector<any>((state) => state.auth.value);
 
   useEffect(() => {
     if (error) {
-      setValue(children);
+      setValue(value);
     }
     setTimeout(() => {
       setError(null);
@@ -37,7 +38,7 @@ export default function Card({
 
   async function updateHandler(e: any) {
     const res = await axios.post("http://localhost:8000/api/update-profile", {
-      [fieldName]: value,
+      [fieldName.toLocaleLowerCase()]: formValue,
       token,
     });
     if (res.data.error) {
@@ -48,7 +49,7 @@ export default function Card({
   return (
     <div
       className={`shadow px-3 ${
-        type === "view" ? "py-2" : "py-1"
+        type === "view" ? "py-4" : "py-1"
       } flex w-full justify-between items-center`}
     >
       {error && <Error error={error} />}
@@ -56,12 +57,20 @@ export default function Card({
         <input
           onChange={changeHandler}
           autoFocus
-          placeholder={children}
+          placeholder={fieldName}
           className="w-11/12 outline-none text-orange-500"
         />
-      ) : (
-        <span>{value ? value : children}</span>
-      )}
+      ) : fieldName === "linkedin" ? (
+        <a
+          className="hover:underline w-full inline-block"
+          target="_black"
+          href={`${value}`}
+        >
+          {formValue ? formValue : value}
+        </a>
+      ) : value ? (
+        <span>{formValue ? formValue : value}</span>
+      ) : null}
       {type !== "view" ? (
         <aside className="ml-3 flex py-1">
           {edit ? (
@@ -77,7 +86,7 @@ export default function Card({
               <IconButton
                 sx={{ color: "red" }}
                 onClick={() => {
-                  setValue(children);
+                  setValue(value);
                   setEdit(null);
                 }}
               >

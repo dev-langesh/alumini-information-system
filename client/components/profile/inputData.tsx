@@ -35,11 +35,16 @@ export const inputObj: inputType[] = [
   {
     id: 7,
     name: "job",
-    placeholder: "Job Name",
+    placeholder: "Designation",
   },
   {
     id: 8,
     name: "location",
     placeholder: "Current Location",
+  },
+  {
+    id: 9,
+    name: "linkedin",
+    placeholder: "Linkedin Profile",
   },
 ];

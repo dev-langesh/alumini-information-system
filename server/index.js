@@ -15,7 +15,7 @@ const app = express();
 
 //configuring env
 require("dotenv").config();
-const port = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5001;
 
 //connecting to mongodb
 connectDB();
@@ -47,12 +47,13 @@ io.on("connection", (socket) => {
 });
 
 app.use("/", (req, res) => {
-  res.json({ message: "server is running" });
+  console.log(`server at ${PORT}`);
+  res.json({ message: "server is running", port: PORT });
 });
 
 //error handler
 app.use(require("./middlewares/error.middleware"));
 
-server.listen(port, () => {
-  console.log(`Server started at http://localhost:${port}`);
+server.listen(PORT, () => {
+  console.log(`Server started at http://localhost:${PORT}`);
 });

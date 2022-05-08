@@ -13,14 +13,15 @@ export default function ShowProfile() {
       <UpdateImage url={profile.img} />
       <main className="flex lg:flex-row flex-col flex-1">
         <section className="flex flex-col  w-full flex-1 p-5  space-y-3">
-          <Card fieldName={"name"}>{profile.name}</Card>
-          <Card fieldName={"email"}>{profile.email}</Card>
-          <Card fieldName={"phone"}>{profile.phone}</Card>
-          <Card fieldName={"company"}>{profile.company}</Card>
-          <Card fieldName={"location"}>{profile.location}</Card>
-          <Card fieldName={"job"}>{profile.job}</Card>
-          <Card fieldName={"degree"}>{profile.degree}</Card>
-          <Card fieldName={"batch"}>{profile.batch}</Card>
+          <Card fieldName={"Name"} value={profile.name}></Card>
+          <Card fieldName={"Email"} value={profile.email}></Card>
+          <Card fieldName={"Phone"} value={profile.phone}></Card>
+          <Card fieldName={"Degree"} value={profile.degree}></Card>
+          <Card fieldName={"Batch"} value={profile.batch}></Card>
+          <Card fieldName={"Company"} value={profile.company}></Card>
+          <Card fieldName={"Location"} value={profile.location}></Card>
+          <Card fieldName={"Job"} value={profile.job}></Card>
+          <Card fieldName="linkedin" value={profile.linkedin}></Card>
         </section>
         <footer>
           <PastRecords records={profile.records} />

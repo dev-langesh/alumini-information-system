@@ -51,6 +51,8 @@ async function updateProfile(req, res) {
   const token = req.body.token;
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   try {
+    console.log(profileValidator(req.body));
+
     if (!profileValidator(req.body)) {
       res.json({ error: "Invalid Credentials" });
       return;

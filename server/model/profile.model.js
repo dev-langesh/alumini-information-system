@@ -15,6 +15,7 @@ const schema = mongoose.Schema(
     company: { type: String, required: true },
     job: { type: String, required: true },
     location: { type: String, required: true },
+    linkedin: { type: String, unique: true },
     img: { type: String, unique: true, required: true },
     description: String,
     records: String,
