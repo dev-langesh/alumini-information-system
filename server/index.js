@@ -6,9 +6,7 @@ const { Server } = require("socket.io");
 const Redis = require("ioredis");
 const { corsOptions } = require("./config/corsOptions");
 const { notificationModel } = require("./model/notification.model");
-const { sendMail } = require("./config/sendMail");
-
-const redis = new Redis();
+const { rateLimiter } = require("./middlewares/rateLimiter.middleware");
 
 //initializing app
 const app = express();
@@ -24,6 +22,7 @@ connectDB();
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(rateLimiter);
 app.use("/uploads", express.static("uploads"));
 app.use("/api/user", require("./routes/userRoutes"));
 app.use("/api/upload", require("./routes/uploadRoute"));

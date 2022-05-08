@@ -49,7 +49,7 @@ export default function Card({
   return (
     <div
       className={`shadow px-3 ${
-        type === "view" ? "py-4" : "py-1"
+        type === "view" ? "py-4 border-l-4 border-orange-500" : "py-1"
       } flex w-full justify-between items-center`}
     >
       {error && <Error error={error} />}
@@ -62,14 +62,14 @@ export default function Card({
         />
       ) : fieldName === "linkedin" ? (
         <a
-          className="hover:underline w-full inline-block"
+          className="hover:underline  inline-block break-words w-[200px] sm:w-full"
           target="_black"
           href={`${value}`}
         >
           {formValue ? formValue : value}
         </a>
       ) : value ? (
-        <span>{formValue ? formValue : value}</span>
+        <span className="break-words">{formValue ? formValue : value}</span>
       ) : null}
       {type !== "view" ? (
         <aside className="ml-3 flex py-1">
