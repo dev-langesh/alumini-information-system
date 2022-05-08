@@ -2,9 +2,10 @@ import Link from "next/link";
 import MenuIcon from "@mui/icons-material/Menu";
 import { open } from "../../src/features/sidebarSlice";
 import { signin, logout } from "../../src/features/authSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useLayoutEffect, useState } from "react";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import SendIcon from "@mui/icons-material/Send";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { setProfiles } from "../../src/features/profiles";
 import axios from "axios";
@@ -29,7 +30,7 @@ export default function Header() {
     async function search() {
       if (searchValue === "") {
         const response = await axios.get(
-          "http://localhost:8000/api/get-all-profile"
+          "http://localhost/api/get-all-profile"
         );
         dispatch(setProfiles(response.data));
         return;
@@ -46,7 +47,7 @@ export default function Header() {
 
       if (filtered.length === 0) {
         const response = await axios.get(
-          "http://localhost:8000/api/get-all-profile"
+          "http://localhost/api/get-all-profile"
         );
         dispatch(setProfiles(response.data));
         return;
@@ -78,9 +79,9 @@ export default function Header() {
       <section className="hidden sm:block space-x-7">
         {auth ? (
           <>
-            <Link href="/notifications">
+            <Link href="/chat">
               <a className="hover:underline underline-offset-1 decoration-dotted">
-                <NotificationsIcon className="text-white " />
+                <SendIcon className="text-white " />
               </a>
             </Link>
             <Link href="/profile">

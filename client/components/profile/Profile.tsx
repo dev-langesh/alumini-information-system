@@ -19,14 +19,11 @@ export default function Profile() {
 
   useEffect(() => {
     async function getProfile() {
-      const response = await axios.get(
-        "http://localhost:8000/api/get-profile",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get("http://localhost/api/get-profile", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       setLoading(false);
 

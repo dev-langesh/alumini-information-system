@@ -30,8 +30,8 @@ export default function ChangePassword() {
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    const response = await axios.put(
-      "http://localhost:8000/api/user/send-mail-to-change-forget-password",
+    const response = await axios.post(
+      "http://localhost/api/user/send-mail-to-change-forgot-password",
 
       {
         email: formdata.email,
@@ -47,29 +47,35 @@ export default function ChangePassword() {
 
   if (emailSent) {
     return (
-      <section className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-11/12 sm:w-[400px]">
-        <VerifyEmail />
-      </section>
+      <>
+        <Error error={error} />
+        <section className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-11/12 sm:w-[400px]">
+          <VerifyEmail />
+        </section>
+      </>
     );
   }
 
   return (
-    <section className="pt-12">
-      <form
-        onSubmit={submitHandler}
-        className="w-11/12 sm:w-[400px] mx-auto p-4 shadow-xl space-y-8"
-      >
-        <input
-          type="text"
-          onChange={changeHandler}
-          name="email"
-          placeholder="Enter email"
-          className={`border px-4 py-2 w-full block focus:border-orange-500 outline-none relative`}
-        />
-        <button className="px-6 py-2 w-full bg-orange-500 text-white  cursor-pointer hover:ring-2 ring-orange-500 ring-offset-2">
-          Verify Email
-        </button>
-      </form>
-    </section>
+    <>
+      <Error error={error} />
+      <section className="pt-12">
+        <form
+          onSubmit={submitHandler}
+          className="w-11/12 sm:w-[400px] mx-auto p-4 shadow-xl space-y-8"
+        >
+          <input
+            type="text"
+            onChange={changeHandler}
+            name="email"
+            placeholder="Enter email"
+            className={`border px-4 py-2 w-full block focus:border-orange-500 outline-none relative`}
+          />
+          <button className="px-6 py-2 w-full bg-orange-500 text-white  cursor-pointer hover:ring-2 ring-orange-500 ring-offset-2">
+            Verify Email
+          </button>
+        </form>
+      </section>
+    </>
   );
 }

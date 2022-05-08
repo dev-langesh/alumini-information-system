@@ -1,5 +1,4 @@
 const { profileValidator } = require("../config/profileValidator");
-const { validateEmail } = require("../config/validateEmail");
 const { Profile } = require("../model/profile.model");
 
 // POST api / upload
@@ -35,6 +34,7 @@ async function uploadImage(req, res) {
   }
 
   try {
+    console.log(req.body);
     if (!profileValidator(req.body)) {
       res.json({ error: "Invalid Credentials" });
       return;
@@ -54,8 +54,10 @@ async function uploadImage(req, res) {
       degree,
       phone,
       records: records[1],
-      img: `http://localhost:${process.env.PORT}/${imgPath}`,
+      img: `http://localhost/${imgPath}`,
       linkedin,
+      likes: 0,
+      likedProfiles: [],
     });
   } catch (err) {
     res.json({ error: "Duplicate Value", stack: err.stack });

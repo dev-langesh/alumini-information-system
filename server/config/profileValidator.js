@@ -1,8 +1,7 @@
 const { validateEmail } = require("./validateEmail");
 
 function profileValidator(props) {
-  console.log(props.mail);
-  console.log(validateEmail(props.email) + " email");
+  console.log(props);
   if (props.email) {
     if (!validateEmail(props.email)) {
       return false;

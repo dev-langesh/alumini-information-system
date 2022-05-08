@@ -16,7 +16,7 @@ export default function Notifications(props: any) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const response = await axios.get("http://localhost:8000/api/get-messages");
+  const response = await axios.get("http://localhost/api/get-messages");
 
   const data = response.data;
 

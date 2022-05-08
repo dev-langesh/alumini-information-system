@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context;
 
   const res = await axios.get(
-    `http://localhost:8000/api/user/verify-email/${params?.id}`
+    `http://localhost/api/user/verify-email/${params?.id}`
   );
 
   console.log(res.data);

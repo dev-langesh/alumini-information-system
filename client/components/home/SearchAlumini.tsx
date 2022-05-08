@@ -23,7 +23,7 @@ export default function Form() {
     async function search() {
       if (value === "") {
         const response = await axios.get(
-          "http://localhost:8000/api/get-all-profile"
+          "http://localhost/api/get-all-profile"
         );
         dispatch(setProfiles(response.data));
         return;
@@ -40,7 +40,7 @@ export default function Form() {
 
       if (filtered.length === 0) {
         const response = await axios.get(
-          "http://localhost:8000/api/get-all-profile"
+          "http://localhost/api/get-all-profile"
         );
         dispatch(setProfiles(response.data));
         return;

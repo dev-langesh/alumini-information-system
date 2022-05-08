@@ -37,7 +37,7 @@ export default function Card({
   }
 
   async function updateHandler(e: any) {
-    const res = await axios.post("http://localhost:8000/api/update-profile", {
+    const res = await axios.post("http://localhost/api/update-profile", {
       [fieldName.toLocaleLowerCase()]: formValue,
       token,
     });
@@ -48,8 +48,8 @@ export default function Card({
 
   return (
     <div
-      className={`shadow px-3 ${
-        type === "view" ? "py-4 border-l-4 border-orange-500" : "py-1"
+      className={`shadow px-3 border-l-4 border-orange-500 ${
+        type === "view" ? "py-4 " : "py-1"
       } flex w-full justify-between items-center`}
     >
       {error && <Error error={error} />}

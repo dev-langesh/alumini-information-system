@@ -19,6 +19,8 @@ const schema = mongoose.Schema(
     img: { type: String, unique: true, required: true },
     description: String,
     records: String,
+    likes: Number,
+    likedProfiles: [String],
   },
   { collection: "profile" }
 );

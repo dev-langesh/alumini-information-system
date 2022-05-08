@@ -36,7 +36,7 @@ export default function Alumini(props: any) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await axios.get(`http://localhost:8000/api/get-all-profile`);
+  const response = await axios.get(`http://localhost/api/get-all-profile`);
 
   const paths = response.data.map((item: any) => {
     return {
@@ -55,7 +55,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { params } = context;
 
   const response = await axios.get(
-    `http://localhost:8000/api/alumini/${params?.id}`
+    `http://localhost/api/alumini/${params?.id}`
   );
 
   return {

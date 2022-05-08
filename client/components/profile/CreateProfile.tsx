@@ -34,7 +34,7 @@ export default function CreateProfile() {
 
     const xhr = new XMLHttpRequest();
 
-    xhr.open("POST", "http://localhost:8000/api/upload", true);
+    xhr.open("POST", "http://localhost/api/upload", true);
 
     xhr.upload.addEventListener("progress", (e) => {
       console.log(Math.ceil((e.loaded / e.total) * 100));

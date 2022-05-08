@@ -1,8 +1,7 @@
-import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
+import React, { SyntheticEvent, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "../../src/features/aluminiSlice";
 import Loading from "../common/Loading";
-import { formDataType } from "./formDataType";
 
 export default function UpdateImage({
   url,
@@ -21,7 +20,7 @@ export default function UpdateImage({
     e.preventDefault();
     const xhr = new XMLHttpRequest();
 
-    xhr.open("POST", "http://localhost:8000/api/update-image", true);
+    xhr.open("POST", "http://localhost/api/update-image", true);
 
     xhr.upload.addEventListener("progress", (e) => {
       console.log(Math.ceil((e.loaded / e.total) * 100));

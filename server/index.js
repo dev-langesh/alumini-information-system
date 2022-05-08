@@ -3,7 +3,6 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 const http = require("http");
 const { Server } = require("socket.io");
-const Redis = require("ioredis");
 const { corsOptions } = require("./config/corsOptions");
 const { notificationModel } = require("./model/notification.model");
 const { rateLimiter } = require("./middlewares/rateLimiter.middleware");
@@ -13,7 +12,7 @@ const app = express();
 
 //configuring env
 require("dotenv").config();
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT;
 
 //connecting to mongodb
 connectDB();
@@ -45,7 +44,7 @@ io.on("connection", (socket) => {
   });
 });
 
-app.use("/", (req, res) => {
+app.get("/", (req, res) => {
   console.log(`server at ${PORT}`);
   res.json({ message: "server is running", port: PORT });
 });

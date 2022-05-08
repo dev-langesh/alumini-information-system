@@ -14,7 +14,7 @@ const {
 router.get("/getUser", protect, getUser);
 router.get("/verify-email/:id", verifyEmail);
 router.post(
-  "/send-mail-to-change-forget-password",
+  "/send-mail-to-change-forgot-password",
   sendMailToChangeForgotPassword
 );
 router.post("/register", registerUser);

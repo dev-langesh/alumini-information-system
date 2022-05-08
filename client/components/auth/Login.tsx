@@ -73,7 +73,7 @@ export default function Login() {
 
     setLoading(true);
     const response: any = await axios.post(
-      "http://localhost:8000/api/user/login",
+      "http://localhost/api/user/login",
       formValue
     );
 

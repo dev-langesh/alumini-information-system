@@ -18,7 +18,7 @@ const Home: NextPage = (props: any) => {
 export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await axios.get("http://localhost:8000/api/get-all-profile");
+  const response = await axios.get("http://localhost/api/get-all-profile");
   return {
     props: { data: response.data },
     revalidate: 5,

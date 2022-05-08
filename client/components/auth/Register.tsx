@@ -1,4 +1,3 @@
-import { GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -8,7 +7,6 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Error from "../common/Error";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { signin } from "../../src/features/authSlice";
 import VerifyEmail from "./VerifyEmail";
 
 type formtype = {
@@ -36,8 +34,6 @@ export default function Register() {
   const [error, setError] = useState<string>("");
   const [msg, setMsg] = useState<string>("");
   const [otp, setOtp] = useState<boolean>(false);
-  const router = useRouter();
-  const dispatch = useDispatch();
 
   const inputObj: inputObjType = [
     {
@@ -97,7 +93,7 @@ export default function Register() {
     if (validateEmail(formValue.email)) {
       setLoading(true);
       const response: any = await axios.post(
-        "http://localhost:8000/api/user/register",
+        "http://localhost/api/user/register",
         formValue
       );
 

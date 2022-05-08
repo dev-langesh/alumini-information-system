@@ -12,8 +12,8 @@ export const navWithAuthObj: navObjType = [
   },
   {
     key: 1,
-    title: "Notifications",
-    href: "/notifications",
+    title: "Chat",
+    href: "/chat",
   },
 ];
 export const navWithoutAuthObj: navObjType = [
@@ -26,5 +26,10 @@ export const navWithoutAuthObj: navObjType = [
     key: 1,
     title: "Login",
     href: "/login",
+  },
+  {
+    key: 2,
+    title: "Chat",
+    href: "/chat",
   },
 ];

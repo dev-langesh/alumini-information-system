@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const { User } = require("../model/users.model");
 const generateToken = require("../config/generateJWT");
 const { sendMail } = require("../config/sendMail");
+const { validateEmail } = require("../config/validateEmail");
 
 // @desc     register user
 // @route    POST /api/user/register
@@ -138,11 +139,20 @@ async function changePassword(req, res) {
 }
 
 // @desc    change forgot password
-// @route   GET /api/user/send-mail-to-change-forgot-password
+// @route   POST /api/user/send-mail-to-change-forgot-password
 // @access  private
 async function sendMailToChangeForgotPassword(req, res) {
   const email = req.body.email;
-  console.log(email);
+
+  if (!email) {
+    res.json({ error: "Enter Your Email" });
+    return;
+  }
+
+  if (!validateEmail(email)) {
+    res.json({ error: "Invalid Email" });
+    return;
+  }
 
   const user = await User.findOne({ email });
 

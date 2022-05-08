@@ -31,10 +31,10 @@ async function updateImage(req, res) {
 
     if (data) {
       await Profile.findByIdAndUpdate(data._id, {
-        $set: { img: "http://localhost:8000/" + req.file.path },
+        $set: { img: "http://localhost/" + req.file.path },
       });
 
-      res.json({ url: "http://localhost:8000/" + req.file.path });
+      res.json({ url: "http://localhost/" + req.file.path });
       return;
     }
   } catch (err) {
@@ -96,10 +96,25 @@ async function getAlumini(req, res) {
   res.json(data);
 }
 
+async function likeProfile(req, res) {
+  const { likeId, token } = req.body;
+
+  console.log(req.body);
+
+  const decoded = jwt.decode(token, process.env.JWT_SECRET);
+  await Profile.findByIdAndUpdate(likeId, { $inc: { likes: 1 } });
+  await Profile.findByIdAndUpdate(decoded.id, {
+    $set: { likedProfiles: [likeId.toString()] },
+  });
+
+  res.json({ status: "ok" });
+}
+
 module.exports = {
   getProfile,
   updateImage,
   updateProfile,
   getAllProfile,
   getAlumini,
+  likeProfile,
 };

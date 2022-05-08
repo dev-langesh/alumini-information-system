@@ -31,7 +31,7 @@ export default function PastRecords({
   }, [records]);
 
   async function updateHandler() {
-    const res = await axios.post("http://localhost:8000/api/update-profile", {
+    const res = await axios.post("http://localhost/api/update-profile", {
       records: value,
       token,
     });
@@ -43,7 +43,7 @@ export default function PastRecords({
 
   return (
     <section className="m-5 md:ml-0 flex items-center flex-col flex-shrink-1 ">
-      <div className="w-full lg:w-[400px] h-[200px] shadow ml-5 p-4 relative">
+      <div className="w-full lg:w-[400px] h-[200px] shadow md:ml-5 p-4 relative">
         <h1 className="text-orange-500">Past Records</h1>
         {edit ? (
           <textarea

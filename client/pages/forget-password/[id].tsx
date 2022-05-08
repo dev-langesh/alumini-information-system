@@ -3,9 +3,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Error from "../../components/common/Error";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { signin } from "../../src/features/authSlice";
 import axios from "axios";
 
 type formtype = {
@@ -36,7 +35,6 @@ export default function ChangePassword() {
   const [formdata, setFormdata] = useState<formtype>({} as formtype);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const token = useSelector<any>((state) => state.auth.value);
   const router = useRouter();
 
   const { id } = router.query;
@@ -61,7 +59,7 @@ export default function ChangePassword() {
     }
     console.log(id);
     const response = await axios.put(
-      "http://localhost:8000/api/user/change-forgot-password",
+      "http://localhost/api/user/change-forgot-password",
       {
         id,
         password: formdata.confirmPassword,
